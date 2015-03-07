@@ -12,6 +12,11 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET /api/aebersold        @controllers.Aebersold.all
 GET /api/aebersold/random @controllers.Aebersold.random
 
+# Titles API
+GET /api/titles        @controllers.Titles.all
+GET /api/titles/random @controllers.Titles.random
+GET /api/titles/:id    @controllers.Titles.get(id: Int)
+
 GET /current-user @controllers.Application.currentUser
 GET /custom/login @controllers.CustomLoginController.login
 GET /logout @controllers.CustomLoginController.logout

@@ -2,17 +2,17 @@ package controllers
 
 import aebersold.{AebersoldSongSerializer, AebersoldDataSource}
 import com.google.inject.Inject
-import play.api.mvc.Action
-import play.api.mvc.Results._
+import securesocial.core.RuntimeEnvironment
+import service.User
 
-class Aebersold @Inject() (aebersoldDataSource: AebersoldDataSource) {
+class Aebersold @Inject() (dataSource: AebersoldDataSource, override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
   val serializer = new AebersoldSongSerializer
 
-  def all = Action { request =>
-    Ok(serializer.serializeMany(aebersoldDataSource.all))
+  def all = SecuredAction { implicit request =>
+    Ok(serializer.serializeMany(dataSource.all))
   }
 
-  def random = Action { request =>
-    Ok(serializer.serialize(aebersoldDataSource.random))
+  def random = SecuredAction { implicit request =>
+    Ok(serializer.serialize(dataSource.random))
   }
 }

@@ -10,6 +10,7 @@ import securesocial.core.providers.UsernamePasswordProvider
 import securesocial.core.{IdentityProvider, RuntimeEnvironment}
 import securesocial.core.services.UserService
 import service.{MyEventListener, User}
+import titles.{InMemoryTitleDataSource, TitleDataSource}
 
 import scala.collection.immutable.ListMap
 
@@ -30,6 +31,10 @@ object Global extends play.api.GlobalSettings {
       bind(classOf[AebersoldDataSource]).toProvider(new Provider[AebersoldDataSource] {
         lazy val dataSource = new InMemoryAebersoldDataSource("aebersold_index.csv")
         override def get(): AebersoldDataSource = dataSource
+      })
+      bind(classOf[TitleDataSource]).toProvider(new Provider[TitleDataSource] {
+        lazy val dataSource = new InMemoryTitleDataSource("jazz_standards.csv")
+        override def get(): TitleDataSource = dataSource
       })
     }
   })
