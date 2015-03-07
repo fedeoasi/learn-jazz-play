@@ -25,11 +25,16 @@ lazy val guice = "com.google.inject" % "guice" % "3.0"
 lazy val javaInject = "javax.inject" % "javax.inject" % "1"
 lazy val diDependencies = Seq(guice, javaInject)
 
+lazy val json4s = "org.json4s" %% "json4s-jackson" % "3.2.11"
+lazy val csv = "com.github.tototoshi" %% "scala-csv" % "1.1.2"
+
 libraryDependencies ++= Seq(
   securesocial,
   webJarsPlay,
   webJarsBootstrap,
   scalatestPlus,
+  json4s,
+  csv,
   jdbc,
   anorm,
   cache,
