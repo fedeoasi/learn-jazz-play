@@ -1,6 +1,7 @@
 import java.io.File
 
-import com.google.inject.{AbstractModule, Guice, TypeLiteral}
+import aebersold.{InMemoryAebersoldDataSource, AebersoldDataSource}
+import com.google.inject.{Provider, AbstractModule, Guice, TypeLiteral}
 import com.typesafe.config.ConfigFactory
 import controllers.CustomRoutesService
 import persistence.{MyUserService, ProdAuthPersistenceService}
@@ -26,6 +27,10 @@ object Global extends play.api.GlobalSettings {
   val injector = Guice.createInjector(new AbstractModule {
     protected def configure() {
       bind(new TypeLiteral[RuntimeEnvironment[User]] {}).toInstance(MyRuntimeEnvironment)
+      bind(classOf[AebersoldDataSource]).toProvider(new Provider[AebersoldDataSource] {
+        lazy val dataSource = new InMemoryAebersoldDataSource("aebersold_index.csv")
+        override def get(): AebersoldDataSource = dataSource
+      })
     }
   })
 

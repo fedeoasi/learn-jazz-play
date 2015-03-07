@@ -7,8 +7,6 @@ import securesocial.core.services.RoutesService
 import securesocial.core.{IdentityProvider, RuntimeEnvironment}
 import service.User
 
-trait UserRuntimeEnvironment extends RuntimeEnvironment[User]
-
 class CustomLoginController @Inject() (override implicit val env: RuntimeEnvironment[User]) extends BaseLoginPage[User] {}
 
 class CustomProviderController @Inject() (override implicit val env: RuntimeEnvironment[User]) extends BaseProviderController[User] { }
