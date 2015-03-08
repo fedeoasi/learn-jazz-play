@@ -8,6 +8,10 @@ import service.User
 class Aebersold @Inject() (dataSource: AebersoldDataSource, override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
   val serializer = new AebersoldSongSerializer
 
+  def index = SecuredAction { implicit request =>
+    Ok(views.html.aebersold())
+  }
+
   def all = SecuredAction { implicit request =>
     Ok(serializer.serializeMany(dataSource.all))
   }

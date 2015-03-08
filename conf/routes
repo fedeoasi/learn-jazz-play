@@ -8,7 +8,8 @@ GET     /                           @controllers.Application.index
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-# Aebersold API
+# Aebersold
+GET /aebersold            @controllers.Aebersold.index
 GET /api/aebersold        @controllers.Aebersold.all
 GET /api/aebersold/random @controllers.Aebersold.random
 
