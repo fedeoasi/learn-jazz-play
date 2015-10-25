@@ -3,44 +3,44 @@
 # ~~~~
 
 # Home page
-GET     /                           @controllers.Application.index
+GET /  @controllers.ApplicationController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET /assets/*file  controllers.Assets.at(path="/public", file)
 
 # Aebersold
-GET /aebersold            @controllers.Aebersold.index
-GET /api/aebersold        @controllers.Aebersold.all
-GET /api/aebersold/random @controllers.Aebersold.random
+GET /aebersold             @controllers.AebersoldController.index
+GET /api/aebersold         @controllers.AebersoldController.all
+GET /api/aebersold/random  @controllers.AebersoldController.random
 
 # Titles
-GET /titles/:id        @controllers.Titles.index(id: Int)
-GET /api/titles        @controllers.Titles.all
-GET /api/titles/random @controllers.Titles.random
-GET /api/titles/:id    @controllers.Titles.get(id: Int)
+GET /titles/:id         @controllers.TitlesController.index(id: Int)
+GET /api/titles         @controllers.TitlesController.all
+GET /api/titles/random  @controllers.TitlesController.random
+GET /api/titles/:id     @controllers.TitlesController.get(id: Int)
 
-GET /current-user @controllers.Application.currentUser
-GET /custom/login @controllers.CustomLoginController.login
-GET /logout       @controllers.CustomLoginController.logout
+GET /current-user  @controllers.ApplicationController.currentUser
+GET /custom/login  @controllers.CustomLoginController.login
+GET /logout        @controllers.CustomLoginController.logout
 
 # Registration routes
-GET  /signup            @controllers.CustomRegistrationController.startSignUp
-POST /signup            @controllers.CustomRegistrationController.handleStartSignUp
-GET  /signup/:mailToken @controllers.CustomRegistrationController.signUp(mailToken)
-POST /signup/:mailToken @controllers.CustomRegistrationController.handleSignUp(mailToken)
+GET  /signup             @controllers.CustomRegistrationController.startSignUp
+POST /signup             @controllers.CustomRegistrationController.handleStartSignUp
+GET  /signup/:mailToken  @controllers.CustomRegistrationController.signUp(mailToken)
+POST /signup/:mailToken  @controllers.CustomRegistrationController.handleSignUp(mailToken)
 
 # Reset password
-GET  /reset            @controllers.CustomPasswordResetController.startResetPassword
-POST /reset            @controllers.CustomPasswordResetController.handleStartResetPassword
-GET  /reset/:mailToken @controllers.CustomPasswordResetController.resetPassword(mailToken)
-POST /reset/:mailToken @controllers.CustomPasswordResetController.handleResetPassword(mailToken)
+GET  /reset             @controllers.CustomPasswordResetController.startResetPassword
+POST /reset             @controllers.CustomPasswordResetController.handleStartResetPassword
+GET  /reset/:mailToken  @controllers.CustomPasswordResetController.resetPassword(mailToken)
+POST /reset/:mailToken  @controllers.CustomPasswordResetController.handleResetPassword(mailToken)
 
 # Change Password
-GET  /password @controllers.CustomPasswordChangeController.page
-POST /password @controllers.CustomPasswordChangeController.handlePasswordChange
+GET  /password  @controllers.CustomPasswordChangeController.page
+POST /password  @controllers.CustomPasswordChangeController.handlePasswordChange
 
 # Authentication entry points for all providers
-GET   /authenticate/:provider     @controllers.CustomProviderController.authenticate(provider, redirectTo: Option[String])
-POST  /authenticate/:provider     @controllers.CustomProviderController.authenticateByPost(provider, redirectTo: Option[String])
-#POST /api/authenticate/:provider @controllers.CustomLoginApiController.authenticate(provider, builder = "token")
-#GET  /assets/*file               controllers.Assets.at(path = "/public/securesocial", file)
+GET   /authenticate/:provider      @controllers.CustomProviderController.authenticate(provider, redirectTo: Option[String])
+POST  /authenticate/:provider      @controllers.CustomProviderController.authenticateByPost(provider, redirectTo: Option[String])
+#POST /api/authenticate/:provider  @controllers.CustomLoginApiController.authenticate(provider, builder = "token")
+#GET  /assets/*file                controllers.Assets.at(path = "/public/securesocial", file)

@@ -5,7 +5,7 @@ import securesocial.core.RuntimeEnvironment
 import service.User
 import titles.{TitleDataSource, TitleSerializer}
 
-class Titles @Inject() (dataSource: TitleDataSource,
+class TitlesController @Inject() (dataSource: TitleDataSource,
                         override implicit val env: RuntimeEnvironment[User])
   extends securesocial.core.SecureSocial[User] {
 
