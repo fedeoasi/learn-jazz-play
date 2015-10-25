@@ -30,4 +30,8 @@ class TitlesController @Inject() (dataSource: TitleDataSource,
       case None => NotFound(s"Did not find title with id $id")
     }
   }
+
+  def viewAll = SecuredAction { implicit r =>
+    Ok(views.html.titles())
+  }
 }

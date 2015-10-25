@@ -14,6 +14,7 @@ GET /api/aebersold         @controllers.AebersoldController.all
 GET /api/aebersold/random  @controllers.AebersoldController.random
 
 # Titles
+GET /titles             @controllers.TitlesController.viewAll
 GET /titles/:id         @controllers.TitlesController.index(id: Int)
 GET /api/titles         @controllers.TitlesController.all
 GET /api/titles/random  @controllers.TitlesController.random
