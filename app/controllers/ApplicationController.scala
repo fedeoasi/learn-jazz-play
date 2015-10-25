@@ -11,6 +11,10 @@ class ApplicationController @Inject() (override implicit val env: RuntimeEnviron
     Ok(views.html.index(request.user.main))
   }
 
+  def home = SecuredAction { implicit request =>
+    Ok(views.html.home())
+  }
+
   /**
    * Sample use of SecureSocial.currentUser. Access the /current-user to test it
    */
