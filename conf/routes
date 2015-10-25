@@ -13,7 +13,8 @@ GET /aebersold            @controllers.Aebersold.index
 GET /api/aebersold        @controllers.Aebersold.all
 GET /api/aebersold/random @controllers.Aebersold.random
 
-# Titles API
+# Titles
+GET /titles/:id        @controllers.Titles.index(id: Int)
 GET /api/titles        @controllers.Titles.all
 GET /api/titles/random @controllers.Titles.random
 GET /api/titles/:id    @controllers.Titles.get(id: Int)

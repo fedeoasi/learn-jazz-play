@@ -1,0 +1,37 @@
+@(id: Int, title: String)
+
+@main(title) {
+    @rateit()
+    @linkpreview()
+    <script type="text/javascript">
+        var titleId = @id;
+    </script>
+
+    <h1>@title</h1>
+
+    <div id="titleDiv">
+        <div class="row-fluid.well">
+            <div id="titleDetailDiv"></div>
+        </div>
+    </div>
+
+    <div id="likeDiv">
+        <div class="row-fluid.well">
+            <p>How well do you know this song?</p>
+            <div id="knowRateDiv" class="rateit"></div>
+            <p>How do you like it?</p>
+            <div id="likeRateDiv" class="rateit"></div>
+        </div>
+    </div>
+
+    <div id="preview-container">
+        <div class="row-fluid input-append">
+            <input type="text" size="50">
+            <button id="refresh-button" class="btn btn-primary" type="button">Preview</button>
+        </div>
+    </div>
+    <div id="preview-container2">
+    </div>
+
+    <span id="rate"></span>
+}
