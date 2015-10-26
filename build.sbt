@@ -10,7 +10,7 @@ scalaVersion := "2.11.1"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
-lazy val securesocial = "ws.securesocial" %% "securesocial" % "master-SNAPSHOT"
+lazy val securesocial = "ws.securesocial" %% "securesocial" % "3.0-M3"
 lazy val webJarsPlay = "org.webjars" %% "webjars-play" % "2.3.0-2"
 lazy val webJarsBootstrap = "org.webjars" % "bootstrap" % "3.1.1-2"
 lazy val scalatestPlus = "org.scalatestplus" %% "play" % "1.2.0" % "test"
