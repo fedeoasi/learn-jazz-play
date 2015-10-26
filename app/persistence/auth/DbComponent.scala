@@ -1,4 +1,4 @@
-package persistence
+package persistence.auth
 
 import com.github.tototoshi.slick.GenericJodaSupport
 import scala.slick.driver.JdbcDriver

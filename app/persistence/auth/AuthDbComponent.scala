@@ -1,4 +1,4 @@
-package persistence
+package persistence.auth
 
 import org.joda.time.DateTime
 

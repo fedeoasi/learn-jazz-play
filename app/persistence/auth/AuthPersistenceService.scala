@@ -1,4 +1,4 @@
-package persistence
+package persistence.auth
 
 import play.api.Logger
 import securesocial.core.providers.MailToken

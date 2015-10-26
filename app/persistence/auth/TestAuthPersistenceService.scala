@@ -1,4 +1,4 @@
-package persistence
+package persistence.auth
 
 import java.util.UUID
 

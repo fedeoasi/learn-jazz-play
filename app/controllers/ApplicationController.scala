@@ -6,7 +6,9 @@ import securesocial.core._
 import service.User
 
 @Singleton
-class ApplicationController @Inject() (override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
+class ApplicationController @Inject() (override implicit val env: RuntimeEnvironment[User])
+  extends securesocial.core.SecureSocial[User] {
+
   def index = SecuredAction { implicit request =>
     Ok(views.html.index(request.user.main))
   }

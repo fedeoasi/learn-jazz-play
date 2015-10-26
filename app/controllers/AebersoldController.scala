@@ -5,7 +5,10 @@ import com.google.inject.Inject
 import securesocial.core.RuntimeEnvironment
 import service.User
 
-class AebersoldController @Inject() (dataSource: AebersoldDataSource, override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
+class AebersoldController @Inject() (dataSource: AebersoldDataSource,
+                                     override implicit val env: RuntimeEnvironment[User])
+  extends securesocial.core.SecureSocial[User] {
+
   val serializer = new AebersoldSongSerializer
 
   def index = SecuredAction { implicit request =>

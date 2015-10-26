@@ -1,4 +1,4 @@
-package persistence
+package persistence.auth
 
 import scala.slick.driver.SQLiteDriver.simple._
 import scala.slick.driver.SQLiteDriver

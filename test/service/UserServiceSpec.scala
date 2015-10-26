@@ -1,7 +1,7 @@
 package service
 
 import org.scalatest.{Matchers, FunSpec}
-import persistence.{TestAuthPersistenceService, MyUserService}
+import persistence.auth.{TestAuthPersistenceService, MyUserService}
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 

@@ -4,7 +4,7 @@ import aebersold.{InMemoryAebersoldDataSource, AebersoldDataSource}
 import com.google.inject.{Provider, AbstractModule, Guice, TypeLiteral}
 import com.typesafe.config.ConfigFactory
 import controllers.CustomRoutesService
-import persistence.{MyUserService, ProdAuthPersistenceService}
+import persistence.auth.{MyUserService, ProdAuthPersistenceService}
 import play.api._
 import securesocial.core.providers.UsernamePasswordProvider
 import securesocial.core.{IdentityProvider, RuntimeEnvironment}
