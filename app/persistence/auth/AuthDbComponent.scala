@@ -1,6 +1,7 @@
 package persistence.auth
 
 import org.joda.time.DateTime
+import persistence.{DBComponent, Profile}
 
 import scala.slick.driver.JdbcDriver
 

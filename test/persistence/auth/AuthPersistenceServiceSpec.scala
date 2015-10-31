@@ -1,9 +1,9 @@
-package persistence
+package persistence.auth
 
 import org.joda.time.DateTime
-import org.scalatest.{Matchers, FunSpec}
+import org.scalatest.{FunSpec, Matchers}
 import securesocial.core.providers.MailToken
-import securesocial.core.{PasswordInfo, AuthenticationMethod, BasicProfile}
+import securesocial.core.{AuthenticationMethod, BasicProfile, PasswordInfo}
 import service.User
 
 class AuthPersistenceServiceSpec extends FunSpec with Matchers {
