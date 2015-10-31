@@ -28,6 +28,10 @@ GET  /api/titles/:titleId/ratings/like         @controllers.RatingsController.li
 POST /api/titles/:titleId/ratings/like         @controllers.RatingsController.postLike(titleId: Int)
 POST /api/titles/:titleId/ratings/like/cancel  @controllers.RatingsController.cancelLike(titleId: Int)
 
+# Videos
+GET  /api/titles/:titleId/videos  @controllers.VideosController.get(titleId: Int)
+POST /api/titles/:titleId/videos  @controllers.VideosController.post(titleId: Int)
+
 GET /current-user  @controllers.ApplicationController.currentUser
 GET /custom/login  @controllers.CustomLoginController.login
 GET /logout        @controllers.CustomLoginController.logout
