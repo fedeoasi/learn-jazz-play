@@ -4,10 +4,11 @@ import aebersold.{AebersoldSongSerializer, AebersoldDataSource}
 import com.google.inject.Inject
 import securesocial.core.RuntimeEnvironment
 import service.User
+import securesocial.core.SecureSocial
 
 class AebersoldController @Inject() (dataSource: AebersoldDataSource,
                                      override implicit val env: RuntimeEnvironment[User])
-  extends securesocial.core.SecureSocial[User] {
+  extends SecureSocial[User] {
 
   val serializer = new AebersoldSongSerializer
 

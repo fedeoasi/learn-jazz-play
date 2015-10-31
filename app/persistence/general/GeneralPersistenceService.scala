@@ -1,7 +1,9 @@
 package persistence.general
 
+import com.google.inject.ImplementedBy
 import model.Video
 
+@ImplementedBy(classOf[GeneralPersistenceServiceImpl])
 trait GeneralPersistenceService extends RatingPersistence with VideoPersistence
 
 trait RatingPersistence {
