@@ -5,7 +5,7 @@ import com.google.inject.{Provider, AbstractModule, Guice, TypeLiteral}
 import com.typesafe.config.ConfigFactory
 import controllers.CustomRoutesService
 import persistence.SQLiteDatabaseInitializer
-import persistence.auth.{MyUserService, ProdAuthPersistenceService}
+import persistence.auth.{MyUserService, AuthPersistenceServiceImpl}
 import play.api._
 import securesocial.core.providers.UsernamePasswordProvider
 import securesocial.core.{IdentityProvider, RuntimeEnvironment}
@@ -21,7 +21,7 @@ object Global extends play.api.GlobalSettings {
   object MyRuntimeEnvironment extends RuntimeEnvironment.Default[User] {
     override implicit val executionContext = play.api.libs.concurrent.Execution.defaultContext
     override lazy val routes = new CustomRoutesService()
-    override lazy val userService: UserService[User] = new MyUserService(new ProdAuthPersistenceService("courses"))
+    override lazy val userService: UserService[User] = new MyUserService(new AuthPersistenceServiceImpl(database))
     override lazy val eventListeners = List(new MyEventListener())
     override lazy val providers: ListMap[String, IdentityProvider] = ListMap(
       include(new UsernamePasswordProvider[User](userService, avatarService, viewTemplates, passwordHashers))
