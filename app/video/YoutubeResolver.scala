@@ -17,7 +17,7 @@ class YoutubeResolver(implicit application: Application) {
 
   def resolveUrl(urlString: String): String = {
     val futureResponse = WS.url(urlString).get()
-    Await.result(futureResponse, 2.seconds).body
+    Await.result(futureResponse, 10.seconds).body
   }
 
   def extractVideoId(urlString: String): Option[String] = {

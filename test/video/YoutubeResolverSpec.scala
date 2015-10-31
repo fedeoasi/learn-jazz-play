@@ -8,6 +8,7 @@ class YoutubeResolverSpec extends FunSpec with Matchers {
   private val resolver = new YoutubeResolver
   private val urls = Seq(
     "http://www.youtube.com/watch?v=j4dMnAPZu70",
+    "https://www.youtube.com/watch?v=j4dMnAPZu70",
     "http://www.youtube.com/v/j4dMnAPZu70?fs=1&hl=en_US",
     "http://youtu.be/j4dMnAPZu70",
     "https://youtu.be/j4dMnAPZu70",

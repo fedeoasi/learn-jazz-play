@@ -31,6 +31,7 @@ POST /api/titles/:titleId/ratings/like/cancel  @controllers.RatingsController.ca
 # Videos
 GET  /api/titles/:titleId/videos  @controllers.VideosController.get(titleId: Int)
 POST /api/titles/:titleId/videos  @controllers.VideosController.post(titleId: Int)
+GET  /api/resolveLink             @controllers.VideosController.resolveLink(url: String)
 
 GET /current-user  @controllers.ApplicationController.currentUser
 GET /custom/login  @controllers.CustomLoginController.login
