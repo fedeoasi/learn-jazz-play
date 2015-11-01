@@ -6,6 +6,4 @@ import scala.slick.driver.SQLiteDriver.simple._
 
 class GeneralPersistenceServiceImpl @Inject() (override val database: Database) extends BaseGeneralPersistenceService {
   override val dal: LearnJazzDAL = new LearnJazzDAL(SQLiteDriver)
-
-  initializeDatabase()
 }

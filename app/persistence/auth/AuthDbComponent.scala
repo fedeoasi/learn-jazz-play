@@ -1,7 +1,7 @@
 package persistence.auth
 
 import org.joda.time.DateTime
-import persistence.{DBComponent, Profile}
+import persistence.{Dal, DBComponent, Profile}
 
 import scala.slick.driver.JdbcDriver
 
@@ -56,6 +56,14 @@ class AuthDbComponent extends DBComponent {
   }
 
   object tokens extends TableQuery(new Tokens(_))
+
+  val tables = Seq(users, tokens)
 }
 
-class AuthDal(override val driver: JdbcDriver) extends AuthDbComponent with Profile
+class AuthDal(override val driver: JdbcDriver) extends AuthDbComponent
+  with Dal with Profile {
+
+  import driver.simple._
+  override def createStatements: Seq[String] = tables.flatMap(_.ddl.createStatements)
+  override def create(implicit session: driver.simple.Session): Unit = tables.foreach(_.ddl.create)
+}
