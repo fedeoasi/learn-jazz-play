@@ -1,3 +1,4 @@
+import com.typesafe.sbt.less.Import.LessKeys
 import play.PlayScala
 
 name := """learn-jazz-play"""
@@ -40,3 +41,11 @@ libraryDependencies ++= Seq(
   cache,
   ws
 ) ++ dbDependencies ++ diDependencies
+
+includeFilter in (Assets, LessKeys.less) := "*.less"
+
+excludeFilter in (Assets, LessKeys.less) := "_*.less"
+
+LessKeys.compress := true
+
+LessKeys.verbose := true
