@@ -1,6 +1,6 @@
 import play.PlayScala
 
-name := """courses-app"""
+name := """learn-jazz-play"""
 
 version := "1.0-SNAPSHOT"
 
