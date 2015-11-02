@@ -115,15 +115,4 @@ abstract class AuthPersistenceService {
       }
     }
   }
-
-  def initializeDatabase() {
-    database withSession { implicit s =>
-      if(!MTable.getTables.list.exists(_.name.name == users.shaped.value.tableName)) {
-        users.ddl.create
-      }
-      if(!MTable.getTables.list.exists(_.name.name == tokens.shaped.value.tableName)) {
-        tokens.ddl.create
-      }
-    }
-  }
 }

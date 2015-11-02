@@ -1,7 +1,7 @@
 package controllers
 
 import com.google.inject.Inject
-import model.Video
+import model.{VideoInput, Video}
 import persistence.general.GeneralPersistenceService
 import play.api.Logger
 import play.api.Play.current
@@ -36,7 +36,7 @@ class VideosController @Inject() (generalPersistenceService: GeneralPersistenceS
     val decoded = UriEncoding.decodePath(url, "UTF-8")
     youtubeResolver.extractVideoId(decoded) match {
       case Some(id) =>
-        generalPersistenceService.saveVideo(titleId, 1, Video(id))
+        generalPersistenceService.saveVideo(titleId, 1, VideoInput(id))
         Ok("Saved video")
       case None =>
         BadRequest("Could not extract youtube id")

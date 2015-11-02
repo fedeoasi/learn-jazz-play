@@ -1,6 +1,6 @@
 package persistence.general
 
-import model.Video
+import model.{VideoInput, Video}
 import org.scalatest.{Matchers, FunSpec}
 
 class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
@@ -14,7 +14,7 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
       it("should set and find a rating") {
         val gps = buildPersistenceService()
         gps.setRating(1, 1, LikeRating, 5)
-        gps.ratingFor(1, 1, LikeRating) should be(Some(5))
+        gps.ratingFor(1, 1, LikeRating).map(_.rating) should be(Some(5))
         gps.ratingFor(1, 1, KnowRating) should be(None)
       }
 
@@ -29,7 +29,7 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
         val gps = buildPersistenceService()
         gps.setRating(3, 3, LikeRating, 5)
         gps.setRating(3, 3, LikeRating, 3)
-        gps.ratingFor(3, 3, LikeRating) should be(Some(3))
+        gps.ratingFor(3, 3, LikeRating).map(_.rating) should be(Some(3))
         gps.countRatingsBy(3, LikeRating) should be(1)
       }
 
@@ -49,19 +49,17 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
 
       it("should add and find a video") {
         val gps = buildPersistenceService()
-        gps.saveVideo(1, 2, Video("abcd"))
+        gps.saveVideo(1, 2, VideoInput("abcd"))
         val videos = gps.videosFor(1)
-        videos.size should be(1)
-        videos should contain (Video("abcd", Some(1)))
+        videos.map(_.videoId) shouldBe Seq("abcd")
       }
 
       it("should be idempotent") {
         val gps = buildPersistenceService()
-        gps.saveVideo(2, 2, Video("abcd"))
-        gps.saveVideo(2, 2, Video("abcd"))
+        gps.saveVideo(2, 2, VideoInput("abcd"))
+        gps.saveVideo(2, 2, VideoInput("abcd"))
         val videos = gps.videosFor(2)
-        videos.size should be(1)
-        videos should contain (Video("abcd", Some(1)))
+        videos.map(_.videoId) shouldBe Seq("abcd")
       }
     }
   }

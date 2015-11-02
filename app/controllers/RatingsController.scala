@@ -42,7 +42,7 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
 
   private def get(titleId: Int, ratingType: RatingType)(implicit r: Request[_]) = {
     val rating = generalPersistenceService.ratingFor(1, titleId, ratingType)
-    Ok(rating.map(_.toString).getOrElse("N/A"))
+    Ok(rating.map(_.rating.toString).getOrElse("N/A"))
   }
 
   private def post(titleId: Int, ratingType: RatingType)(implicit r: Request[_]) = {

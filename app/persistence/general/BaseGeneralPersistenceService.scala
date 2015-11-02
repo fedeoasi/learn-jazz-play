@@ -1,9 +1,9 @@
 package persistence.general
 
-import model.Video
+import model.{VideoInput, Video}
+import org.joda.time.DateTime
 import play.api.Logger
-
-import scala.slick.jdbc.meta.MTable
+import persistence.Daos._
 
 abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
   val dal: LearnJazzDAL
@@ -14,9 +14,9 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
 
   protected val logger = Logger.logger
 
-  override def ratingFor(userId: Int, titleId: Int, ratingType: RatingType): Option[Double] = {
+  override def ratingFor(userId: Int, titleId: Int, ratingType: RatingType): Option[Rating] = {
     database withSession { implicit s =>
-      findRating(userId, titleId, ratingType.discriminator).map(_.rating).list.headOption
+      findRating(userId, titleId, ratingType.discriminator).list.map { dao => Rating(dao.rating, dao.modifiedTime) }.headOption
     }
   }
 
@@ -42,7 +42,7 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
           val dao = existingDao.copy(rating = rating)
           existingRating.update(dao)
         case None =>
-          val dao = RatingDao(userId, titleId, ratingType.discriminator, rating)
+          val dao = RatingDao(userId, titleId, ratingType.discriminator, rating, DateTime.now)
           ratings.insert(dao)
       }
     }
@@ -56,33 +56,19 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
   override def videosFor(titleId: Int): Seq[Video] = {
     database withSession { implicit s =>
       videos.filter(_.titleId === titleId).list.map { dao =>
-        Video(dao.videoId, dao.id)
+        Video(dao.videoId, dao.modifiedTime, dao.id)
       }
     }
   }
 
-  override def saveVideo(titleId: Int, userId: Int, video: Video): Unit = {
+  override def saveVideo(titleId: Int, userId: Int, video: VideoInput): Unit = {
     database withTransaction { implicit s =>
       val existingQuery = videos.filter(v => v.titleId === titleId && v.videoId === video.videoId)
       if (existingQuery.map(_.id).list.headOption.isEmpty) {
-        val dao = VideoDao(titleId, userId, video.videoId)
+        val dao = VideoDao(titleId, userId, video.videoId, DateTime.now)
         videos.insert(dao)
       }
     }
-  }
-
-  def initializeDatabase() {
-    database withSession { implicit s =>
-      if(!MTable.getTables.list.exists(_.name.name == ratings.shaped.value.tableName)) {
-        logger.debug(ratings.ddl.createStatements.mkString("\n"))
-        ratings.ddl.create
-      }
-      if(!MTable.getTables.list.exists(_.name.name == videos.shaped.value.tableName)) {
-        logger.info(ratings.ddl.createStatements.mkString("\n"))
-        videos.ddl.create
-      }
-    }
-    logger.info("The database has been initialized")
   }
 }
 
