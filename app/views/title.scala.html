@@ -3,6 +3,7 @@
 @main(title) {
     @rateit()
     @linkpreview()
+    @jsimport("youtube.js")
     <script type="text/javascript">
         var titleId = @id;
     </script>
@@ -32,4 +33,6 @@
     </div>
 
     <span id="rate"></span>
+
+    <div id="videosDiv"></div>
 }
