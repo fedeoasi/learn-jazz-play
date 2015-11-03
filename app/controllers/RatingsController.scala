@@ -1,10 +1,9 @@
 package controllers
 
 import com.google.inject.Inject
-import persistence.general.{LikeRating, RatingType, KnowRating, GeneralPersistenceService}
+import persistence.general.{GeneralPersistenceService, KnowRating, LikeRating, RatingType}
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.mvc.Request
 import securesocial.core.{RuntimeEnvironment, SecureSocial}
 import service.User
 
@@ -40,20 +39,23 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
     cancel(titleId, LikeRating)
   }
 
-  private def get(titleId: Int, ratingType: RatingType)(implicit r: Request[_]) = {
-    val rating = generalPersistenceService.ratingFor(1, titleId, ratingType)
+  private def get(titleId: Int, ratingType: RatingType)
+                 (implicit r: SecuredRequest[_]) = {
+    val rating = generalPersistenceService.ratingFor(r.user.id, titleId, ratingType)
     Ok(rating.map(_.rating.toString).getOrElse("N/A"))
   }
 
-  private def post(titleId: Int, ratingType: RatingType)(implicit r: Request[_]) = {
+  private def post(titleId: Int, ratingType: RatingType)
+                  (implicit r: SecuredRequest[_]) = {
     val boundForm = ratingForm.bindFromRequest()
     val rating = boundForm.get.rating.toDouble
-    generalPersistenceService.setRating(1, titleId, ratingType, rating)
+    generalPersistenceService.setRating(r.user.id, titleId, ratingType, rating)
     Ok("Rating set")
   }
 
-  private def cancel(titleId: Int, ratingType: RatingType)(implicit r: Request[_]) = {
-    generalPersistenceService.cancelRating(1, titleId, ratingType)
+  private def cancel(titleId: Int, ratingType: RatingType)
+                    (implicit r: SecuredRequest[_]) = {
+    generalPersistenceService.cancelRating(r.user.id, titleId, ratingType)
     Ok("Rating canceled")
   }
 }

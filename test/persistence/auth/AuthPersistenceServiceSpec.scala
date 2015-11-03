@@ -47,7 +47,7 @@ class AuthPersistenceServiceSpec extends FunSpec with Matchers {
         val profile = buildProfile("pid", "uid", AuthenticationMethod.UserPassword, Some("First"), Some("Last"),
           Some("First Last"), Some("abc@gmail.com"), Some("avatar"), None, None, somePasswordInfo)
         ps.saveUser(profile)
-        val user = User(profile, List(profile))
+        val user = User(profile, List(profile), 1)
         ps.passwordInfoFor(user.main) should be(somePasswordInfo)
       }
     }

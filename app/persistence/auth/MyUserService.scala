@@ -32,8 +32,8 @@ class MyUserService(aps: AuthPersistenceService) extends UserService[User] {
   }
 
   override def save(profile: BasicProfile, mode: SaveMode): Future[User] = Future.successful {
-    aps.saveUser(profile)
-    User(profile, List(profile))
+    val savedDao = aps.saveUser(profile)
+    User(profile, List(profile), savedDao.id.get)
   }
 
   override def findToken(token: String): Future[Option[MailToken]] = Future.successful {

@@ -35,15 +35,18 @@ abstract class AuthPersistenceService {
     BasicProfile(d.providerId, d.userId, d.firstName, d.lastName, d.fullName, d.email, d.avatarUrl, AuthenticationMethod.UserPassword, None, None, passInfo)
   }
 
-  def saveUser(p: BasicProfile): Unit = {
+  def saveUser(p: BasicProfile): UserDao = {
     val newDao = userDao(p, p.passwordInfo)
     database withSession { implicit s =>
       val query = users.filter(_.email === p.email)
       query.list.headOption match {
         case Some(oldDao) =>
-          query.update(newDao.copy(id = oldDao.id))
+          val updatedDao = newDao.copy(id = oldDao.id)
+          query.update(updatedDao)
+          updatedDao
         case None =>
-          users.insert(newDao)
+          val id = users.returning(users.map(_.id)).insert(newDao)
+          newDao.copy(id = Some(id))
       }
     }
   }
@@ -51,7 +54,7 @@ abstract class AuthPersistenceService {
   private def userDao(p: BasicProfile, pi: Option[PasswordInfo]): UserDao = {
     val hasher = pi.map(_.hasher)
     val password = pi.map(_.password)
-    val salt = pi.map(_.salt).flatten
+    val salt = pi.flatMap(_.salt)
     UserDao(p.providerId, p.userId, p.firstName, p.lastName, p.fullName, p.email, p.avatarUrl, hasher, password, salt)
   }
 
