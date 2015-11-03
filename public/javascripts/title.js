@@ -70,7 +70,13 @@ function bindRating(ratingType, divId) {
         });
     });
     $(divId).bind('reset', function() {
-        $(messageId).text('Rating reset');
+        jqAjax({
+            url: knowRatingUrl,
+            type: 'DELETE',
+            error: function() {
+                console.log('Error deleting rating');
+            }
+        });
     });
 }
 
