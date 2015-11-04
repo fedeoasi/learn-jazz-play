@@ -16,7 +16,8 @@ import titles.{InMemoryTitleDataSource, TitleDataSource}
 import scala.collection.immutable.ListMap
 
 object Global extends play.api.GlobalSettings {
-  val database = SQLiteDatabaseInitializer.database("courses")
+  private val database = SQLiteDatabaseInitializer.database("courses")
+  private val logger = Logger.logger
 
   object MyRuntimeEnvironment extends RuntimeEnvironment.Default[User] {
     override implicit val executionContext = play.api.libs.concurrent.Execution.defaultContext
@@ -48,7 +49,9 @@ object Global extends play.api.GlobalSettings {
   override def getControllerInstance[A](controllerClass: Class[A]): A = injector.getInstance(controllerClass)
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
-    val modeSpecificConfig = config ++ Configuration(ConfigFactory.load(s"application.${mode.toString.toLowerCase}.conf"))
+    val configOverride = s"application.${mode.toString.toLowerCase}.conf"
+    logger.info(s"looking for config override at: $configOverride")
+    val modeSpecificConfig = config ++ Configuration(ConfigFactory.load(configOverride))
     super.onLoadConfig(modeSpecificConfig, path, classloader, mode)
   }
 }
