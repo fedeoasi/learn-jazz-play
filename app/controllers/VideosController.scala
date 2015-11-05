@@ -25,7 +25,12 @@ class VideosController @Inject() (generalPersistenceService: GeneralPersistenceS
   )
   private val youtubeResolver = new YoutubeResolver
 
-  def get(titleId: Int) = SecuredAction { implicit r =>
+  def list() = SecuredAction { implicit r =>
+    val videos = generalPersistenceService.videosForUser(r.user.id)
+    Ok(videoSerializer.serializeMany(videos))
+  }
+
+  def listForTitle(titleId: Int) = SecuredAction { implicit r =>
     val videos = generalPersistenceService.videosForTitle(titleId)
     Ok(videoSerializer.serializeMany(videos))
   }
