@@ -18,6 +18,7 @@ trait RatingPersistence {
 
 trait VideoPersistence {
   def videosForTitle(titleId: Int): Seq[Video]
+  def videosForUser(userId: Int): Seq[Video]
   def saveVideo(titleId: Int, userId: Int, video: VideoInput): Unit
 }
 
