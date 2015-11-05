@@ -30,6 +30,8 @@ lazy val diDependencies = Seq(guice, javaInject)
 lazy val json4s = "org.json4s" %% "json4s-jackson" % "3.2.11"
 lazy val csv = "com.github.tototoshi" %% "scala-csv" % "1.1.2"
 
+lazy val jsoup = "org.jsoup" % "jsoup" % "1.8.3"
+
 libraryDependencies ++= Seq(
   securesocial,
   webJarsPlay,
@@ -40,7 +42,8 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   cache,
-  ws
+  ws,
+  jsoup
 ) ++ dbDependencies ++ diDependencies
 
 includeFilter in (Assets, LessKeys.less) := "*.less"
