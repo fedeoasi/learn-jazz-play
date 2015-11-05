@@ -44,13 +44,13 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
     describe("Videos") {
       it("should find an empty list of videos") {
         val gps = buildPersistenceService()
-        gps.videosFor(1) should be(Seq.empty)
+        gps.videosForTitle(1) should be(Seq.empty)
       }
 
       it("should add and find a video") {
         val gps = buildPersistenceService()
         gps.saveVideo(1, 2, VideoInput("abcd"))
-        val videos = gps.videosFor(1)
+        val videos = gps.videosForTitle(1)
         videos.map(_.videoId) shouldBe Seq("abcd")
       }
 
@@ -58,7 +58,7 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
         val gps = buildPersistenceService()
         gps.saveVideo(2, 2, VideoInput("abcd"))
         gps.saveVideo(2, 2, VideoInput("abcd"))
-        val videos = gps.videosFor(2)
+        val videos = gps.videosForTitle(2)
         videos.map(_.videoId) shouldBe Seq("abcd")
       }
     }

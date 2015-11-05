@@ -53,7 +53,7 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
   }
 
 
-  override def videosFor(titleId: Int): Seq[Video] = {
+  override def videosForTitle(titleId: Int): Seq[Video] = {
     database withSession { implicit s =>
       videos.filter(_.titleId === titleId).list.map { dao =>
         Video(dao.videoId, dao.modifiedTime, dao.id)
