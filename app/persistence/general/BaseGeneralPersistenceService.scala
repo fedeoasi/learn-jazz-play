@@ -66,7 +66,7 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
   }
 
   private def videoFromDao(dao: VideoDao): Video = {
-    Video(dao.videoId, dao.modifiedTime, dao.id)
+    Video(dao.videoId, dao.userId, dao.modifiedTime, dao.id)
   }
 
   override def saveVideo(titleId: Int, userId: Int, video: VideoInput): Unit = {

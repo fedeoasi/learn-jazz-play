@@ -57,10 +57,11 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
 
         it("should be idempotent") {
           val gps = buildPersistenceService()
-          gps.saveVideo(2, 2, VideoInput("abcd"))
-          gps.saveVideo(2, 2, VideoInput("abcd"))
+          gps.saveVideo(2, 3, VideoInput("abcd"))
+          gps.saveVideo(2, 3, VideoInput("abcd"))
           val videos = gps.videosForTitle(2)
           videos.map(_.videoId) shouldBe Seq("abcd")
+          videos.map(_.userId) shouldBe Seq(3)
         }
       }
 
