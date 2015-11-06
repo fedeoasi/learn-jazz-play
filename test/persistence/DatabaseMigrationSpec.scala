@@ -1,12 +1,13 @@
 package persistence
 
+import java.io.File
 import java.util.UUID
 
-import org.scalatest.{Matchers, FunSpec}
+import org.scalatest.{BeforeAndAfterAll, Matchers, FunSpec}
 import persistence.auth.AuthPersistenceServiceImpl
 import persistence.general.{LikeRating, GeneralPersistenceServiceImpl}
 
-class DatabaseMigrationSpec extends FunSpec with Matchers {
+class DatabaseMigrationSpec extends FunSpec with Matchers with BeforeAndAfterAll {
   private val dbName = s"testDb${UUID.randomUUID()}"
   private val db = SQLiteDatabaseInitializer.database(dbName)
 
@@ -20,5 +21,9 @@ class DatabaseMigrationSpec extends FunSpec with Matchers {
       val ps = new GeneralPersistenceServiceImpl(db)
       ps.ratingFor(1, 1, LikeRating) shouldBe None
     }
+  }
+
+  override protected def afterAll(): Unit = {
+    new File(s"$dbName.db").delete()
   }
 }
