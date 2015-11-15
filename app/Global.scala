@@ -35,10 +35,6 @@ object Global extends play.api.GlobalSettings {
     protected def configure() {
       bind(new TypeLiteral[RuntimeEnvironment[User]] {}).toInstance(MyRuntimeEnvironment)
       bind(classOf[Database]).toInstance(database)
-      bind(classOf[AebersoldDataSource]).toProvider(new Provider[AebersoldDataSource] {
-        lazy val dataSource = new InMemoryAebersoldDataSource("aebersold_index.csv")
-        override def get(): AebersoldDataSource = dataSource
-      })
       bind(classOf[TitleDataSource]).toProvider(new Provider[TitleDataSource] {
         lazy val dataSource = {
           val resource = Play.current.classloader.getResourceAsStream("jazz_standards.csv")
