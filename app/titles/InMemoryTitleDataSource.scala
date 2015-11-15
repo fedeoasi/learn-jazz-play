@@ -1,13 +1,14 @@
 package titles
 
+import java.io.Reader
 import java.util.Random
 
 import model.Title
 
-class InMemoryTitleDataSource(location: String) extends TitleDataSource {
+class InMemoryTitleDataSource(fileReader: Reader) extends TitleDataSource {
   val reader = new TitleReader
   val r = new Random
-  val dataset = reader.read(location)
+  val dataset = reader.read(fileReader)
   val byId = dataset.groupBy(_.id).mapValues(_.head)
 
   def all: Seq[Title] = dataset

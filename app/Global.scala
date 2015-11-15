@@ -1,4 +1,4 @@
-import java.io.File
+import java.io.{InputStreamReader, File}
 
 import aebersold.{InMemoryAebersoldDataSource, AebersoldDataSource}
 import com.google.inject.{Provider, AbstractModule, Guice, TypeLiteral}
@@ -40,7 +40,11 @@ object Global extends play.api.GlobalSettings {
         override def get(): AebersoldDataSource = dataSource
       })
       bind(classOf[TitleDataSource]).toProvider(new Provider[TitleDataSource] {
-        lazy val dataSource = new InMemoryTitleDataSource("jazz_standards.csv")
+        lazy val dataSource = {
+          val resource = Play.current.classloader.getResourceAsStream("jazz_standards.csv")
+          val reader = new InputStreamReader(resource)
+          new InMemoryTitleDataSource(reader)
+        }
         override def get(): TitleDataSource = dataSource
       })
     }

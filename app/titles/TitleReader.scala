@@ -1,6 +1,6 @@
 package titles
 
-import java.io.File
+import java.io.{Reader, File}
 
 import com.github.tototoshi.csv.CSVReader
 import model.Title
@@ -15,10 +15,20 @@ object TitleKeys {
 
 class TitleReader {
   def read(location: String): Seq[Title] = {
-    val reader = CSVReader.open(new File("conf/" + location))
-    reader.allWithHeaders().zipWithIndex.map { case (stringMap, i) =>
+    val file = new File("conf/" + location)
+    val csvReader = CSVReader.open(file)
+    read(csvReader)
+  }
+
+  def read(reader: Reader): Seq[Title] = {
+    val csvReader = CSVReader.open(reader)
+    read(csvReader)
+  }
+
+  private def read(csvReader: CSVReader): List[Title] = {
+    csvReader.allWithHeaders().zipWithIndex.map { case (stringMap, i) =>
       try {
-        val title = stringMap(TitleKeys.Title).replace("\u00a0","").trim
+        val title = stringMap(TitleKeys.Title).replace("\u00a0", "").trim
         Title(i, title, stringMap(TitleKeys.Year).toInt, stringMap(TitleKeys.Rank).toInt)
       } catch {
         case NonFatal(t) =>
