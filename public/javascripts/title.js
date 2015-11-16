@@ -134,22 +134,3 @@ function hackToGetThePreviewWorking() {
         jqAjax(settings);
     };
 }
-
-function retrieveVideos(ajaxSource) {
-    jqAjax({
-        url: ajaxSource,
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            $.each(data.videos, function(i, item) {
-                console.log(item);
-                var videoDiv = '<div class="youtube" id="' + item.videoId +  '" style="width:560px; height: 315px;"></div>';
-                $('#videosDiv').append(videoDiv);
-            });
-            setupVideoFrames();
-        },
-        error: function() {
-            console.log('Error retrieving videos');
-        }
-    });
-}

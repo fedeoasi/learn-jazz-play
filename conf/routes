@@ -24,6 +24,7 @@ POST    /api/titles/:titleId/ratings/like         @controllers.RatingsController
 DELETE  /api/titles/:titleId/ratings/like         @controllers.RatingsController.cancelLike(titleId: Int)
 
 # Videos
+GET  /videos                      @controllers.VideosController.view()
 GET  /api/videos                  @controllers.VideosController.list()
 GET  /api/titles/:titleId/videos  @controllers.VideosController.listForTitle(titleId: Int)
 POST /api/titles/:titleId/videos  @controllers.VideosController.post(titleId: Int)
