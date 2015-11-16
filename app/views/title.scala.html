@@ -1,9 +1,10 @@
 @(id: Int, title: String)
 
 @main(title) {
+    @jsimport("title.js")
+    @jsimport("youtube.js")
     @rateit()
     @linkpreview()
-    @jsimport("youtube.js")
     <script type="text/javascript">
         var titleId = @id;
     </script>

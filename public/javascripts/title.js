@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
     });
 
-    retrieveVideos();
+    retrieveVideos('/api/titles/' + titleId + '/videos');
 });
 
 function bindRating(ratingType, divId) {
@@ -135,9 +135,9 @@ function hackToGetThePreviewWorking() {
     };
 }
 
-function retrieveVideos() {
+function retrieveVideos(ajaxSource) {
     jqAjax({
-        url: '/api/titles/' + titleId + '/videos',
+        url: ajaxSource,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
