@@ -8,3 +8,7 @@ jdk:
 notifications:
   email:
     - fedeoasi+ljp@gmail.com
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
