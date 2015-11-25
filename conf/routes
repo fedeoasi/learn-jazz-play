@@ -33,6 +33,9 @@ GET  /api/titles/:titleId/videos  @controllers.VideosController.listForTitle(tit
 POST /api/titles/:titleId/videos  @controllers.VideosController.post(titleId: Int)
 GET  /api/resolveLink             @controllers.VideosController.resolveLink(url: String)
 
+# Playlists
+GET  /api/playlists/new  @controllers.PlaylistsController.generate
+
 GET /current-user  @controllers.ApplicationController.currentUser
 GET /custom/login  @controllers.CustomLoginController.login
 GET /logout        @controllers.CustomLoginController.logout
