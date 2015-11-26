@@ -48,6 +48,12 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
     }
   }
 
+  override def knownTitlesFor(userId: Int): Set[Int] = {
+    database withSession { implicit s =>
+      ratings.filter(_.userId === userId).map(_.titleId).run.toSet
+    }
+  }
+
   private def findRating(userId: Column[Int], titleId: Column[Int], ratingType: Column[String]) = ratings.filter {
     r => r.userId === userId && r.titleId === titleId && r.ratingType === ratingType
   }

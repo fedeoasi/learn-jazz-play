@@ -7,4 +7,5 @@ trait TitleDataSource {
   def random: Title
   def randomId: Int
   def get(id: Int): Option[Title]
+  def apply(id: Int): Title
 }

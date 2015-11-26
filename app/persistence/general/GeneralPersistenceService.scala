@@ -14,6 +14,7 @@ trait RatingPersistence {
   def setRating(userId: Int, titleId: Int, ratingType: RatingType, rating: Double): Unit
   def cancelRating(userId: Int, titleId: Int, ratingType: RatingType): Unit
   def countRatingsBy(userId: Int, ratingType: RatingType): Int
+  def knownTitlesFor(userId: Int): Set[Int]
 }
 
 trait VideoPersistence {

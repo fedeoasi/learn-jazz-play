@@ -39,6 +39,16 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
         gps.countRatingsBy(1, KnowRating) should be(0)
         gps.countRatingsBy(1, LikeRating) should be(1)
       }
+
+      it("returns the titles known by a user") {
+        val gps = buildPersistenceService()
+        gps.setRating(1, 10, KnowRating, 3)
+        gps.setRating(1, 10, LikeRating, 3)
+        gps.setRating(1, 11, KnowRating, 4)
+        gps.setRating(2, 20, KnowRating, 5)
+        gps.knownTitlesFor(1) shouldBe Set(10, 11)
+        gps.knownTitlesFor(2) shouldBe Set(20)
+      }
     }
 
     describe("Videos") {

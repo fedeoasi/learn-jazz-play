@@ -11,11 +11,13 @@ class InMemoryTitleDataSource(fileReader: Reader) extends TitleDataSource {
   val dataset = reader.read(fileReader)
   val byId = dataset.groupBy(_.id).mapValues(_.head)
 
-  def all: Seq[Title] = dataset
+  override def all: Seq[Title] = dataset
 
-  def random: Title = dataset(randomId)
+  override def random: Title = dataset(randomId)
 
-  def randomId: Int = r.nextInt(dataset.size)
+  override def randomId: Int = r.nextInt(dataset.size)
 
-  def get(id: Int): Option[Title] = byId.get(id)
+  override def get(id: Int): Option[Title] = byId.get(id)
+
+  override def apply(id: Int): Title = byId(id)
 }
