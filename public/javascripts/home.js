@@ -5,10 +5,10 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data) {
                 var link = $('<a>' + data.title + '</a>');
-                link.attr('href', '/titles/' + data.id)
+                link.attr('href', '/titles/' + data.id);
                 $('#randomSongSpan').html(link);
             },
-            error: function(data) {
+            error: function() {
                 $('#randomSongSpan').html('Error loading a random title');
             }
         });

@@ -15,6 +15,7 @@ lazy val securesocial = "ws.securesocial" %% "securesocial" % "3.0-M3"
 lazy val webJarsPlay = "org.webjars" %% "webjars-play" % "2.3.0-2"
 lazy val webJarsBootstrap = "org.webjars" % "bootstrap" % "3.1.1-2"
 lazy val scalatestPlus = "org.scalatestplus" %% "play" % "1.2.0" % "test"
+lazy val webJarsHandlebars = "org.webjars.bower" % "handlebars" % "2.0.0"
 
 lazy val slick = "com.typesafe.slick" %% "slick" % "2.1.0"
 lazy val sqlite = "org.xerial" % "sqlite-jdbc" % "3.8.7"
@@ -36,6 +37,7 @@ libraryDependencies ++= Seq(
   securesocial,
   webJarsPlay,
   webJarsBootstrap,
+  webJarsHandlebars,
   scalatestPlus,
   json4s,
   csv,

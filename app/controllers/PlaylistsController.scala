@@ -6,7 +6,6 @@ import securesocial.core.{SecureSocial, RuntimeEnvironment}
 import service.User
 import titles.TitleDataSource
 
-
 class PlaylistsController @Inject() (titleDataSource: TitleDataSource)
                                     (override implicit val env: RuntimeEnvironment[User])
   extends SecureSocial[User] {
@@ -19,4 +18,7 @@ class PlaylistsController @Inject() (titleDataSource: TitleDataSource)
     Ok(serializer.serialize(playlist))
   }
 
+  def view() = SecuredAction { implicit r =>
+    Ok(views.html.playlist())
+  }
 }

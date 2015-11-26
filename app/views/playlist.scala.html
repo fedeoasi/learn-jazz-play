@@ -1,0 +1,14 @@
+@()
+
+@main("Newly Generated Playlist") {
+  @jsimport("playlist.js")
+  <div id="playlistDiv"></div>
+
+  <script id="playlistTemplate" type="text/x-handlebars-template">
+    <ul class="list-group">
+      {{#each titles}}
+      <li class="list-group-item"><a href="/titles/{{id}}">{{title}} ({{year}})</a></li>
+      {{/each}}
+    </ul>
+  </script>
+}

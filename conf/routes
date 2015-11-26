@@ -34,6 +34,7 @@ POST /api/titles/:titleId/videos  @controllers.VideosController.post(titleId: In
 GET  /api/resolveLink             @controllers.VideosController.resolveLink(url: String)
 
 # Playlists
+GET  /playlists/new      @controllers.PlaylistsController.view
 GET  /api/playlists/new  @controllers.PlaylistsController.generate
 
 GET /current-user  @controllers.ApplicationController.currentUser
