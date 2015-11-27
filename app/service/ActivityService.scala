@@ -2,7 +2,7 @@ package service
 
 import com.google.inject.{Inject, ImplementedBy}
 import persistence.general.GeneralPersistenceService
-import titles.TitleDataSource
+import titles.TitleRepository
 import com.github.nscala_time.time.Imports._
 
 @ImplementedBy(classOf[ActivityServiceImpl])
@@ -11,14 +11,14 @@ trait ActivityService {
   def userStatsFor(user: User): UserStats
 }
 
-class ActivityServiceImpl @Inject() (titleDataSource: TitleDataSource,
+class ActivityServiceImpl @Inject() (titleRepository: TitleRepository,
                                      generalPersistenceService: GeneralPersistenceService)
   extends ActivityService {
 
   override def activityFor(user: User): Seq[Activity] = {
     val ratings = generalPersistenceService.ratingsFor(user.id)
     val ratingEvents = ratings.map { r =>
-      RatedTitle(r.modifiedDate, titleDataSource(r.titleId))
+      RatedTitle(r.modifiedDate, titleRepository(r.titleId))
     }
     val videos = generalPersistenceService.videosForUser(user.id)
     val videoEvents = videos.map { v =>

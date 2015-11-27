@@ -5,9 +5,9 @@ import model.Title
 import play.twirl.api.Html
 import securesocial.core._
 import service.User
-import titles.TitleDataSource
+import titles.TitleRepository
 
-class EmailsController @Inject() (dataSource: TitleDataSource,
+class EmailsController @Inject() (titleRepository: TitleRepository,
                                   override implicit val env: RuntimeEnvironment[User])
   extends SecureSocial[User] {
 
@@ -15,7 +15,7 @@ class EmailsController @Inject() (dataSource: TitleDataSource,
 
     r.user.main.email match {
       case Some(email) =>
-        val randomTitle = dataSource.random
+        val randomTitle = titleRepository.random
         val subject = s"You should learn ${randomTitle.title}"
         val body = populateTemplate(r, randomTitle)
         env.mailer.sendEmail(subject, email, (None, Some(Html(body))))

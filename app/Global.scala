@@ -1,17 +1,16 @@
-import java.io.{InputStreamReader, File}
+import java.io.{File, InputStreamReader}
 
-import aebersold.{InMemoryAebersoldDataSource, AebersoldDataSource}
-import com.google.inject.{Provider, AbstractModule, Guice, TypeLiteral}
+import com.google.inject.{AbstractModule, Guice, Provider, TypeLiteral}
 import com.typesafe.config.ConfigFactory
 import controllers.CustomRoutesService
 import persistence.SQLiteDatabaseInitializer
-import persistence.auth.{MyUserService, AuthPersistenceServiceImpl}
+import persistence.auth.{AuthPersistenceServiceImpl, MyUserService}
 import play.api._
 import securesocial.core.providers.UsernamePasswordProvider
-import securesocial.core.{IdentityProvider, RuntimeEnvironment}
 import securesocial.core.services.UserService
+import securesocial.core.{IdentityProvider, RuntimeEnvironment}
 import service.{MyEventListener, User}
-import titles.{InMemoryTitleDataSource, TitleDataSource}
+import titles.{InMemoryTitleRepository, TitleRepository}
 
 import scala.collection.immutable.ListMap
 
@@ -35,13 +34,13 @@ object Global extends play.api.GlobalSettings {
     protected def configure() {
       bind(new TypeLiteral[RuntimeEnvironment[User]] {}).toInstance(MyRuntimeEnvironment)
       bind(classOf[Database]).toInstance(database)
-      bind(classOf[TitleDataSource]).toProvider(new Provider[TitleDataSource] {
-        lazy val dataSource = {
+      bind(classOf[TitleRepository]).toProvider(new Provider[TitleRepository] {
+        lazy val titleRepository = {
           val resource = Play.current.classloader.getResourceAsStream("jazz_standards.csv")
           val reader = new InputStreamReader(resource)
-          InMemoryTitleDataSource(reader)
+          InMemoryTitleRepository(reader)
         }
-        override def get(): TitleDataSource = dataSource
+        override def get(): TitleRepository = titleRepository
       })
     }
   })

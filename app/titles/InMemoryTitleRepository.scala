@@ -5,7 +5,7 @@ import java.util.Random
 
 import model.Title
 
-class InMemoryTitleDataSource(dataset: Seq[Title]) extends TitleDataSource {
+class InMemoryTitleRepository(dataset: Seq[Title]) extends TitleRepository {
   val r = new Random
   val byId = dataset.groupBy(_.id).mapValues(_.head)
 
@@ -20,10 +20,10 @@ class InMemoryTitleDataSource(dataset: Seq[Title]) extends TitleDataSource {
   override def apply(id: Int): Title = byId(id)
 }
 
-object InMemoryTitleDataSource {
-  def apply(fileReader: Reader): InMemoryTitleDataSource = {
+object InMemoryTitleRepository {
+  def apply(fileReader: Reader): InMemoryTitleRepository = {
     val reader = new TitleReader
     val dataset = reader.read(fileReader)
-    new InMemoryTitleDataSource(dataset)
+    new InMemoryTitleRepository(dataset)
   }
 }

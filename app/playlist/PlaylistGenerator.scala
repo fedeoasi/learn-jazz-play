@@ -5,7 +5,7 @@ import java.util.Random
 import com.google.inject.{ImplementedBy, Inject}
 import persistence.general.GeneralPersistenceService
 import service.User
-import titles.TitleDataSource
+import titles.TitleRepository
 
 sealed trait PlaylistType
 case object RandomPlaylist extends PlaylistType
@@ -17,7 +17,7 @@ trait PlaylistGenerator {
   def generatePlaylist(user: User, playlistType: PlaylistType = RandomPlaylist): Playlist
 }
 
-class PlaylistGeneratorImpl @Inject() (titleSource: TitleDataSource,
+class PlaylistGeneratorImpl @Inject() (titleSource: TitleRepository,
                                        gps: GeneralPersistenceService) extends PlaylistGenerator {
   private val PlaylistSize = 10
   private val random = new Random()

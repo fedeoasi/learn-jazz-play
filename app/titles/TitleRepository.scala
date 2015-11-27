@@ -2,7 +2,7 @@ package titles
 
 import model.Title
 
-trait TitleDataSource {
+trait TitleRepository {
   def all: Seq[Title]
   def random: Title
   def randomId: Int

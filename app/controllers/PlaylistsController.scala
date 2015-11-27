@@ -4,9 +4,9 @@ import com.google.inject.Inject
 import playlist.{HybridPlaylist, PlaylistGenerator, PlaylistSerializer}
 import securesocial.core.{RuntimeEnvironment, SecureSocial}
 import service.User
-import titles.TitleDataSource
+import titles.TitleRepository
 
-class PlaylistsController @Inject() (titleDataSource: TitleDataSource,
+class PlaylistsController @Inject() (titleRepository: TitleRepository,
                                      generator: PlaylistGenerator)
                                     (override implicit val env: RuntimeEnvironment[User])
   extends SecureSocial[User] {
