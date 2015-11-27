@@ -6,10 +6,12 @@ import org.joda.time.DateTime
 sealed trait Activity {
   def timestamp: DateTime
   def description: String
-  def toBaseActivity: BaseActivity = BaseActivity(timestamp, description)
+  def toBaseActivity: SerializedActivity = {
+    SerializedActivity(timestamp.toString("YYYY-MM-dd hh:mm:ss"), description)
+  }
 }
 
-case class BaseActivity(timestamp: DateTime, description: String) extends Activity
+case class SerializedActivity(timestamp: String, description: String)
 
 case class RatedTitle(timestamp: DateTime,
                       title: Title) extends Activity {
