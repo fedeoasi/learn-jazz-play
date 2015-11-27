@@ -12,7 +12,7 @@ class ActivityController @Inject() (activityService: ActivityService,
   val serializer = new BaseActivitySerializer
 
   def get() = SecuredAction { implicit r =>
-    val activities = activityService.activityFor(r.user)
+    val activities = activityService.activityFor(r.user).take(10)
     Ok(serializer.serializeMany(activities.map(_.toBaseActivity)))
   }
 }

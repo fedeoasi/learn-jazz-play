@@ -27,6 +27,8 @@ lazy val h2 = "com.h2database" % "h2" % "1.4.185"
 lazy val flyway = "org.flywaydb" % "flyway-core" % "3.2.1"
 lazy val dbDependencies = Seq(slick, sqlite, jodaMapper, flyway)
 
+lazy val nscalaTime = "com.github.nscala-time" %% "nscala-time" % "2.6.0"
+
 lazy val guice = "com.google.inject" % "guice" % "3.0"
 lazy val javaInject = "javax.inject" % "javax.inject" % "1"
 lazy val diDependencies = Seq(guice, javaInject)
@@ -51,7 +53,8 @@ libraryDependencies ++= Seq(
   anorm,
   cache,
   ws,
-  jsoup
+  jsoup,
+  nscalaTime
 ) ++ dbDependencies ++ diDependencies
 
 includeFilter in (Assets, LessKeys.less) := "*.less"

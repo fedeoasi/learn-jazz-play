@@ -3,6 +3,7 @@ package service
 import com.google.inject.{Inject, ImplementedBy}
 import persistence.general.GeneralPersistenceService
 import titles.TitleDataSource
+import com.github.nscala_time.time.Imports._
 
 @ImplementedBy(classOf[ActivityServiceImpl])
 trait ActivityService {
@@ -22,7 +23,8 @@ class ActivityServiceImpl @Inject() (titleDataSource: TitleDataSource,
     val videoEvents = videos.map { v =>
       EnteredVideo(v.modifiedTime, v)
     }
-    ratingEvents ++ videoEvents
+    val allEvents = ratingEvents ++ videoEvents
+    allEvents.sortBy(_.timestamp).reverse
   }
 }
 

@@ -1,6 +1,7 @@
 @()
 @main("Learn Jazz Home Page") {
     @jsimport("home.js")
+    @jsimport("activity.js")
 
     <div>
         <button id="randomSongButton" class="btn btn-primary">Random Song</button>
@@ -9,4 +10,14 @@
     <div>
         <a href="/playlists/new">New Playlist</a>
     </div>
+
+    <div id="activityDiv"></div>
+
+    <script id="activityTemplate" type="text/x-handlebars-template">
+      <ul class="list-group">
+        {{#each activities}}
+          <li class="list-group-item">{{timestamp}} {{description}}</li>
+        {{/each}}
+      </ul>
+    </script>
 }
