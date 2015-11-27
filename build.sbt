@@ -17,6 +17,8 @@ lazy val webJarsBootstrap = "org.webjars" % "bootstrap" % "3.1.1-2"
 lazy val scalatestPlus = "org.scalatestplus" %% "play" % "1.2.0" % "test"
 lazy val webJarsHandlebars = "org.webjars.bower" % "handlebars" % "2.0.0"
 lazy val webJarsJQuery = "org.webjars" % "jquery" % "2.1.4"
+lazy val webJarsDatatables = "org.webjars" % "datatables" % "1.10.9"
+lazy val webJarsDatatablesTools = "org.webjars" % "datatables-tools" % "2.2.4-1"
 
 lazy val slick = "com.typesafe.slick" %% "slick" % "2.1.0"
 lazy val sqlite = "org.xerial" % "sqlite-jdbc" % "3.8.7"
@@ -40,6 +42,8 @@ libraryDependencies ++= Seq(
   webJarsBootstrap,
   webJarsHandlebars,
   webJarsJQuery,
+  webJarsDatatables,
+  webJarsDatatablesTools,
   scalatestPlus,
   json4s,
   csv,
