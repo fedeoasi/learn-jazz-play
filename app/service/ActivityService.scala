@@ -18,7 +18,11 @@ class ActivityServiceImpl @Inject() (titleDataSource: TitleDataSource,
     val ratingEvents = ratings.map { r =>
       RatedTitle(user, r.modifiedDate, titleDataSource(r.titleId))
     }
-    ratingEvents
+    val videos = generalPersistenceService.videosForUser(user.id)
+    val videoEvents = videos.map { v =>
+      EnteredVideo(user, v.modifiedTime, v)
+    }
+    ratingEvents ++ videoEvents
   }
 }
 

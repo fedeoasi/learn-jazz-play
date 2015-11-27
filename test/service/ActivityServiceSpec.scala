@@ -1,6 +1,6 @@
 package service
 
-import model.Title
+import model.{Title, VideoInput}
 import org.joda.time.DateTime
 import org.scalatest.{FunSpec, Matchers}
 import persistence.auth.AuthSpecHelper._
@@ -27,6 +27,15 @@ class ActivityServiceSpec extends FunSpec with Matchers {
     gps.setRating(1, 10, LikeRating, 3)
     val service = new ActivityServiceImpl(titleDataSource, gps)
     val expected = Seq(RatedTitle(user, now, title))
+    service.activityFor(user) shouldBe expected
+  }
+
+  it("returns a video event") {
+    val gps = buildPersistenceService()
+    gps.saveVideo(10, 1, VideoInput("asdf"))
+    val savedVideo = gps.videosForUser(1).head
+    val service = new ActivityServiceImpl(titleDataSource, gps)
+    val expected = Seq(EnteredVideo(user, now, savedVideo))
     service.activityFor(user) shouldBe expected
   }
 
