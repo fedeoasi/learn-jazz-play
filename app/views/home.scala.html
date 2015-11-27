@@ -2,6 +2,7 @@
 @main("Welcome to Learn Jazz") {
     @jsimport("home.js")
     @jsimport("activity.js")
+    @jsimport("userStats.js")
 
     <div class="col-lg-6">
         @panel("Learn a Song") {
@@ -14,6 +15,10 @@
             <div>
                 <a href="/playlists/new">New Playlist</a>
             </div>
+        }
+        @panel("User Stats") {
+            <small>Some usage statistics</small>
+            <div id="userStatsDiv"></div>
         }
     </div>
 
@@ -29,6 +34,13 @@
         {{#each activities}}
           <li class="list-group-item">{{timestamp}} {{description}}</li>
         {{/each}}
+      </ul>
+    </script>
+
+    <script id="userStatsTemplate" type="text/x-handlebars-template">
+      <ul class="list-group">
+        <li class="list-group-item">Rated Title Count: {{ratedTitleCount}}</li>
+        <li class="list-group-item">Entered Video Count: {{enteredVideoCount}}</li>
       </ul>
     </script>
 }

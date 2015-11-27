@@ -1,46 +1,63 @@
 package service
 
-import model.{Title, VideoInput}
+import model.VideoInput
 import org.joda.time.DateTime
 import org.scalatest.{FunSpec, Matchers}
 import persistence.auth.AuthSpecHelper._
-import persistence.general.{GeneralPersistenceService, LikeRating, TestGeneralPersistenceService}
-import securesocial.core.AuthenticationMethod
+import persistence.general.{KnowRating, GeneralPersistenceService, LikeRating, TestGeneralPersistenceService}
 import time.FixedNowProvider
-import titles.{InMemoryTitleDataSource, TitleDataSource}
+import titles.TitleSpecHelper._
 
 class ActivityServiceSpec extends FunSpec with Matchers {
-  private val baseProfile = buildProfile("pid", "uid", AuthenticationMethod.UserPassword)
-  private val user = User(baseProfile, List(baseProfile), 1)
-  private val title = Title(10, "Ten", 2010, 3)
-  private val titleDataSource = buildTitleDataSource()
   private val now = DateTime.now
 
-  it("returns an empty activity list") {
-    val gps = buildPersistenceService()
-    val service = new ActivityServiceImpl(titleDataSource, gps)
-    service.activityFor(user) shouldBe Seq.empty
+  describe("Activity") {
+    it("returns an empty activity list") {
+      val gps = buildPersistenceService()
+      val service = new ActivityServiceImpl(titleDataSource, gps)
+      service.activityFor(user) shouldBe Seq.empty
+    }
+
+    it("returns a rating event") {
+      val gps = buildPersistenceService()
+      gps.setRating(1, 10, LikeRating, 3)
+      val service = new ActivityServiceImpl(titleDataSource, gps)
+      val expected = Seq(RatedTitle(now, title))
+      service.activityFor(user) shouldBe expected
+    }
+
+    it("returns a video event") {
+      val gps = buildPersistenceService()
+      gps.saveVideo(10, 1, VideoInput("asdf"))
+      val savedVideo = gps.videosForUser(1).head
+      val service = new ActivityServiceImpl(titleDataSource, gps)
+      val expected = Seq(EnteredVideo(now, savedVideo))
+      service.activityFor(user) shouldBe expected
+    }
   }
 
-  it("returns a rating event") {
-    val gps = buildPersistenceService()
-    gps.setRating(1, 10, LikeRating, 3)
-    val service = new ActivityServiceImpl(titleDataSource, gps)
-    val expected = Seq(RatedTitle(now, title))
-    service.activityFor(user) shouldBe expected
-  }
+  describe("User Stats") {
+    it("returns empty stats for a user") {
+      val gps = buildPersistenceService()
+      val service = new ActivityServiceImpl(titleDataSource, gps)
+      service.userStatsFor(user) shouldBe UserStats(user.id, 0, 0)
+    }
 
-  it("returns a video event") {
-    val gps = buildPersistenceService()
-    gps.saveVideo(10, 1, VideoInput("asdf"))
-    val savedVideo = gps.videosForUser(1).head
-    val service = new ActivityServiceImpl(titleDataSource, gps)
-    val expected = Seq(EnteredVideo(now, savedVideo))
-    service.activityFor(user) shouldBe expected
-  }
+    it("counts the number of ratings") {
+      val gps = buildPersistenceService()
+      val service = new ActivityServiceImpl(titleDataSource, gps)
+      gps.setRating(user.id, title.id, LikeRating, 2)
+      gps.setRating(user.id, secondTitle.id, KnowRating, 3)
+      service.userStatsFor(user) shouldBe UserStats(user.id, 2, 0)
+    }
 
-  private def buildTitleDataSource(): TitleDataSource = {
-    new InMemoryTitleDataSource(Seq(title))
+
+    it("counts the number of added videos") {
+      val gps = buildPersistenceService()
+      val service = new ActivityServiceImpl(titleDataSource, gps)
+      gps.saveVideo(secondTitle.id, user.id, VideoInput("asdf"))
+      service.userStatsFor(user) shouldBe UserStats(user.id, 0, 1)
+    }
   }
 
   private def buildPersistenceService(): GeneralPersistenceService = {

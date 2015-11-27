@@ -1,8 +1,12 @@
 package persistence.auth
 
-import securesocial.core.BasicProfile
+import securesocial.core.{AuthenticationMethod, BasicProfile}
+import service.User
 
 object AuthSpecHelper {
+  val baseProfile = buildProfile("pid", "uid", AuthenticationMethod.UserPassword)
+  val user = User(baseProfile, List(baseProfile), 1)
+
   def buildProfile(providerId: String,
                            userId: String,
                            authMethod : securesocial.core.AuthenticationMethod,

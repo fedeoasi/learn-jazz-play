@@ -12,7 +12,8 @@ GET /assets/*file  controllers.Assets.at(path="/public", file)
 GET /emails/random  @controllers.EmailsController.sendRandom
 
 # Activity
-GET /api/activities  @controllers.ActivityController.get()
+GET /api/activities  @controllers.ActivityController.listActivity()
+GET /api/stats       @controllers.ActivityController.userStats()
 
 # Titles
 GET /titles             @controllers.TitlesController.viewAll

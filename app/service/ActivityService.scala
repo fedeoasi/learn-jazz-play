@@ -8,6 +8,7 @@ import com.github.nscala_time.time.Imports._
 @ImplementedBy(classOf[ActivityServiceImpl])
 trait ActivityService {
   def activityFor(user: User): Seq[Activity]
+  def userStatsFor(user: User): UserStats
 }
 
 class ActivityServiceImpl @Inject() (titleDataSource: TitleDataSource,
@@ -25,6 +26,12 @@ class ActivityServiceImpl @Inject() (titleDataSource: TitleDataSource,
     }
     val allEvents = ratingEvents ++ videoEvents
     allEvents.sortBy(_.timestamp).reverse
+  }
+
+  override def userStatsFor(user: User): UserStats = {
+    val ratedTitleCount = generalPersistenceService.knownTitlesFor(user.id).size
+    val enteredVideoCount = generalPersistenceService.videosForUser(user.id).size
+    UserStats(user.id, ratedTitleCount, enteredVideoCount)
   }
 }
 

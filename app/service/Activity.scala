@@ -7,7 +7,7 @@ sealed trait Activity {
   def timestamp: DateTime
   def description: String
   def toBaseActivity: SerializedActivity = {
-    SerializedActivity(timestamp.toString("YYYY-MM-dd hh:mm:ss"), description)
+    SerializedActivity(timestamp.toString("YYYY-MM-dd hh:mm"), description)
   }
 }
 
@@ -26,4 +26,3 @@ case class EnteredVideo(timestamp: DateTime,
     s"Entered video ${video.videoId}"
   }
 }
-
