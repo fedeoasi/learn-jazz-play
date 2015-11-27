@@ -21,7 +21,7 @@ case class RatedTitle(timestamp: DateTime,
 case class EnteredVideo(timestamp: DateTime,
                         video: Video) extends Activity {
   override def description: String = {
-    s"Entered video $video"
+    s"Entered video ${video.videoId}"
   }
 }
 

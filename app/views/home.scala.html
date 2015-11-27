@@ -1,17 +1,28 @@
 @()
-@main("Learn Jazz Home Page") {
+@main("Welcome to Learn Jazz") {
     @jsimport("home.js")
     @jsimport("activity.js")
 
-    <div>
-        <button id="randomSongButton" class="btn btn-primary">Random Song</button>
-        <span id="randomSongSpan"></span>
-    </div>
-    <div>
-        <a href="/playlists/new">New Playlist</a>
+    <div class="col-lg-6">
+        @panel("Learn a Song") {
+            <div>
+                <button id="randomSongButton" class="btn btn-primary">Random Song</button>
+                <span id="randomSongSpan"></span>
+            </div>
+        }
+        @panel("Practice a Playlist") {
+            <div>
+                <a href="/playlists/new">New Playlist</a>
+            </div>
+        }
     </div>
 
-    <div id="activityDiv"></div>
+    <div class="col-lg-6">
+        @panel("Activity") {
+            <small>The latest activities sorted by time descending</small>
+            <div id="activityDiv"></div>
+        }
+    </div>
 
     <script id="activityTemplate" type="text/x-handlebars-template">
       <ul class="list-group">
