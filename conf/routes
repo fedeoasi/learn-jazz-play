@@ -11,6 +11,9 @@ GET /assets/*file  controllers.Assets.at(path="/public", file)
 # Email
 GET /emails/random  @controllers.EmailsController.sendRandom
 
+# Activity
+GET /api/activities  @controllers.ActivityController.get()
+
 # Titles
 GET /titles             @controllers.TitlesController.viewAll
 GET /titles/:id         @controllers.TitlesController.index(id: Int)

@@ -26,7 +26,7 @@ class ActivityServiceSpec extends FunSpec with Matchers {
     val gps = buildPersistenceService()
     gps.setRating(1, 10, LikeRating, 3)
     val service = new ActivityServiceImpl(titleDataSource, gps)
-    val expected = Seq(RatedTitle(user, now, title))
+    val expected = Seq(RatedTitle(now, title))
     service.activityFor(user) shouldBe expected
   }
 
@@ -35,7 +35,7 @@ class ActivityServiceSpec extends FunSpec with Matchers {
     gps.saveVideo(10, 1, VideoInput("asdf"))
     val savedVideo = gps.videosForUser(1).head
     val service = new ActivityServiceImpl(titleDataSource, gps)
-    val expected = Seq(EnteredVideo(user, now, savedVideo))
+    val expected = Seq(EnteredVideo(now, savedVideo))
     service.activityFor(user) shouldBe expected
   }
 

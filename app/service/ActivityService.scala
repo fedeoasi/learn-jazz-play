@@ -16,11 +16,11 @@ class ActivityServiceImpl @Inject() (titleDataSource: TitleDataSource,
   override def activityFor(user: User): Seq[Activity] = {
     val ratings = generalPersistenceService.ratingsFor(user.id)
     val ratingEvents = ratings.map { r =>
-      RatedTitle(user, r.modifiedDate, titleDataSource(r.titleId))
+      RatedTitle(r.modifiedDate, titleDataSource(r.titleId))
     }
     val videos = generalPersistenceService.videosForUser(user.id)
     val videoEvents = videos.map { v =>
-      EnteredVideo(user, v.modifiedTime, v)
+      EnteredVideo(v.modifiedTime, v)
     }
     ratingEvents ++ videoEvents
   }
