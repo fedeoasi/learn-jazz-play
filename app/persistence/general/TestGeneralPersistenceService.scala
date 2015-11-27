@@ -3,9 +3,12 @@ package persistence.general
 import java.util.UUID
 
 import org.h2.jdbcx.JdbcDataSource
+import time.{NowProviderImpl, NowProvider}
 import scala.slick.driver.H2Driver
 
-class TestGeneralPersistenceService extends BaseGeneralPersistenceService {
+class TestGeneralPersistenceService(override val nowProvider: NowProvider = new NowProviderImpl)
+  extends BaseGeneralPersistenceService {
+
   override val dal: LearnJazzDAL = new LearnJazzDAL(H2Driver)
   import dal._
   import driver.simple._

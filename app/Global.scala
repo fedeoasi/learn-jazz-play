@@ -39,7 +39,7 @@ object Global extends play.api.GlobalSettings {
         lazy val dataSource = {
           val resource = Play.current.classloader.getResourceAsStream("jazz_standards.csv")
           val reader = new InputStreamReader(resource)
-          new InMemoryTitleDataSource(reader)
+          InMemoryTitleDataSource(reader)
         }
         override def get(): TitleDataSource = dataSource
       })

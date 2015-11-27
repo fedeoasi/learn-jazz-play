@@ -1,9 +1,9 @@
 package persistence.general
 
-import model.{VideoInput, Video}
-import org.joda.time.DateTime
-import play.api.Logger
+import model.{Video, VideoInput}
 import persistence.Daos._
+import play.api.Logger
+import time.NowProvider
 
 abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
   val dal: LearnJazzDAL
@@ -12,11 +12,23 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
 
   val database: Database
 
+  val nowProvider: NowProvider
+
   protected val logger = Logger.logger
 
   override def ratingFor(userId: Int, titleId: Int, ratingType: RatingType): Option[Rating] = {
     database withSession { implicit s =>
-      findRating(userId, titleId, ratingType.discriminator).list.map { dao => Rating(dao.rating, dao.modifiedTime) }.headOption
+      findRating(userId, titleId, ratingType.discriminator).list.map(ratingFromDao).headOption
+    }
+  }
+
+  private def ratingFromDao(dao: RatingDao): Rating = {
+    Rating(dao.titleId, dao.rating, dao.modifiedTime)
+  }
+
+  override def ratingsFor(userId: Int): Seq[Rating] = {
+    database withSession { implicit s =>
+      ratings.filter(_.userId === userId).list.map(ratingFromDao)
     }
   }
 
@@ -42,7 +54,7 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
           val dao = existingDao.copy(rating = rating)
           existingRating.update(dao)
         case None =>
-          val dao = RatingDao(userId, titleId, ratingType.discriminator, rating, DateTime.now)
+          val dao = RatingDao(userId, titleId, ratingType.discriminator, rating, nowProvider.now)
           ratings.insert(dao)
       }
     }
@@ -79,7 +91,7 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
     database withTransaction { implicit s =>
       val existingQuery = videos.filter(v => v.titleId === titleId && v.videoId === video.videoId)
       if (existingQuery.map(_.id).list.headOption.isEmpty) {
-        val dao = VideoDao(titleId, userId, video.videoId, DateTime.now)
+        val dao = VideoDao(titleId, userId, video.videoId, nowProvider.now)
         videos.insert(dao)
       }
     }

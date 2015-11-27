@@ -1,9 +1,13 @@
 package persistence.general
 
 import model.{VideoInput, Video}
+import org.joda.time.{DateTime, LocalDate}
 import org.scalatest.{Matchers, FunSpec}
+import time.FixedNowProvider
 
 class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
+  val now = DateTime.now
+
   describe("General Persistence Service") {
     describe("Ratings") {
       it("should not find a non existing rating") {
@@ -48,6 +52,17 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
         gps.setRating(2, 20, KnowRating, 5)
         gps.knownTitlesFor(1) shouldBe Set(10, 11)
         gps.knownTitlesFor(2) shouldBe Set(20)
+      }
+
+      it("does not list any ratings") {
+        val gps = buildPersistenceService()
+        gps.ratingsFor(1) shouldBe Seq.empty
+      }
+
+      it("lists one rating") {
+        val gps = buildPersistenceService()
+        gps.setRating(1, 10, LikeRating, 3)
+        gps.ratingsFor(1) shouldBe Seq(Rating(10, 3, now))
       }
     }
 
@@ -100,6 +115,6 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
   }
   
   private def buildPersistenceService(): GeneralPersistenceService = {
-    new TestGeneralPersistenceService()
+    new TestGeneralPersistenceService(new FixedNowProvider(now))
   } 
 }

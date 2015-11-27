@@ -7,10 +7,11 @@ import org.joda.time.DateTime
 @ImplementedBy(classOf[GeneralPersistenceServiceImpl])
 trait GeneralPersistenceService extends RatingPersistence with VideoPersistence
 
-case class Rating(rating: Double, modifiedDate: DateTime)
+case class Rating(titleId: Int, rating: Double, modifiedDate: DateTime)
 
 trait RatingPersistence {
   def ratingFor(userId: Int, titleId: Int, ratingType: RatingType): Option[Rating]
+  def ratingsFor(userId: Int): Seq[Rating]
   def setRating(userId: Int, titleId: Int, ratingType: RatingType, rating: Double): Unit
   def cancelRating(userId: Int, titleId: Int, ratingType: RatingType): Unit
   def countRatingsBy(userId: Int, ratingType: RatingType): Int
