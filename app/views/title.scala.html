@@ -9,31 +9,39 @@
         var titleId = @id;
     </script>
 
-    <div id="titleDiv">
-        <div class="row-fluid.well">
-            <div id="titleDetailDiv"></div>
-        </div>
+    <div class="col-lg-6">
+        @panel("Details") {
+            <div id="titleDiv">
+                <div class="row-fluid.well">
+                    <div id="titleDetailDiv"></div>
+                </div>
+            </div>
+        }
+
+        @panel("Your Ratings") {
+            <div id="likeDiv">
+                <div class="row-fluid.well">
+                    <p>How well do you know this song?</p>
+                    <div id="knowRateDiv" class="rateit"></div>
+                    <p>How do you like it?</p>
+                    <div id="likeRateDiv" class="rateit"></div>
+                </div>
+            </div>
+        }
     </div>
 
-    <div id="likeDiv">
-        <div class="row-fluid.well">
-            <p>How well do you know this song?</p>
-            <div id="knowRateDiv" class="rateit"></div>
-            <p>How do you like it?</p>
-            <div id="likeRateDiv" class="rateit"></div>
-        </div>
-    </div>
+    <div class="col-lg-6">
+        @panel("Videos") {
+            <small>Paste links to videos for this tune</small>
+            <div id="preview-container">
+                <div class="row-fluid input-append">
+                    <input type="text" size="50">
+                    <button id="refresh-button" class="btn btn-primary" type="button">Preview</button>
+                </div>
+            </div>
+            <div id="preview-container2"></div>
+            <div id="videosDiv"></div>
+    }
 
-    <div id="preview-container">
-        <div class="row-fluid input-append">
-            <input type="text" size="50">
-            <button id="refresh-button" class="btn btn-primary" type="button">Preview</button>
-        </div>
     </div>
-    <div id="preview-container2">
-    </div>
-
-    <span id="rate"></span>
-
-    <div id="videosDiv"></div>
 }
