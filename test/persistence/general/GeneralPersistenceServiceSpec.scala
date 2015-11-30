@@ -62,7 +62,7 @@ class GeneralPersistenceServiceSpec extends FunSpec with Matchers {
       it("lists one rating") {
         val gps = buildPersistenceService()
         gps.setRating(1, 10, LikeRating, 3)
-        gps.ratingsFor(1) shouldBe Seq(Rating(10, 3, now))
+        gps.ratingsFor(1) shouldBe Seq(Rating(10, 3, LikeRating, now))
       }
     }
 

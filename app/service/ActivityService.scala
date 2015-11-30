@@ -1,6 +1,7 @@
 package service
 
 import com.google.inject.{Inject, ImplementedBy}
+import model.{EnteredVideo, RatedTitle, Activity}
 import persistence.general.GeneralPersistenceService
 import titles.TitleRepository
 import com.github.nscala_time.time.Imports._

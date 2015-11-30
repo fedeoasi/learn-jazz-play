@@ -23,7 +23,7 @@ abstract class BaseGeneralPersistenceService extends GeneralPersistenceService {
   }
 
   private def ratingFromDao(dao: RatingDao): Rating = {
-    Rating(dao.titleId, dao.rating, dao.modifiedTime)
+    Rating(dao.titleId, dao.rating, RatingType(dao.ratingType), dao.modifiedTime)
   }
 
   override def ratingsFor(userId: Int): Seq[Rating] = {

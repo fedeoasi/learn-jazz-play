@@ -1,16 +1,13 @@
 package service
 
-import model.VideoInput
-import org.joda.time.DateTime
+import model.{EnteredVideo, RatedTitle, VideoInput}
 import org.scalatest.{FunSpec, Matchers}
+import persistence.PersistenceSpecHelper._
 import persistence.auth.AuthSpecHelper._
-import persistence.general.{KnowRating, GeneralPersistenceService, LikeRating, TestGeneralPersistenceService}
-import time.FixedNowProvider
+import persistence.general.{KnowRating, LikeRating}
 import titles.TitleSpecHelper._
 
 class ActivityServiceSpec extends FunSpec with Matchers {
-  private val now = DateTime.now
-
   describe("Activity") {
     it("returns an empty activity list") {
       val gps = buildPersistenceService()
@@ -47,7 +44,7 @@ class ActivityServiceSpec extends FunSpec with Matchers {
       val gps = buildPersistenceService()
       val service = new ActivityServiceImpl(titleRepository, gps)
       gps.setRating(user.id, title.id, LikeRating, 2)
-      gps.setRating(user.id, secondTitle.id, KnowRating, 3)
+      gps.setRating(user.id, title2.id, KnowRating, 3)
       service.userStatsFor(user) shouldBe UserStats(user.id, 2, 0)
     }
 
@@ -55,12 +52,8 @@ class ActivityServiceSpec extends FunSpec with Matchers {
     it("counts the number of added videos") {
       val gps = buildPersistenceService()
       val service = new ActivityServiceImpl(titleRepository, gps)
-      gps.saveVideo(secondTitle.id, user.id, VideoInput("asdf"))
+      gps.saveVideo(title2.id, user.id, VideoInput("asdf"))
       service.userStatsFor(user) shouldBe UserStats(user.id, 0, 1)
     }
-  }
-
-  private def buildPersistenceService(): GeneralPersistenceService = {
-    new TestGeneralPersistenceService(new FixedNowProvider(now))
   }
 }

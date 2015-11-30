@@ -7,7 +7,10 @@ import org.joda.time.DateTime
 @ImplementedBy(classOf[GeneralPersistenceServiceImpl])
 trait GeneralPersistenceService extends RatingPersistence with VideoPersistence
 
-case class Rating(titleId: Int, rating: Double, modifiedDate: DateTime)
+case class Rating(titleId: Int,
+                  rating: Double,
+                  ratingType: RatingType,
+                  modifiedDate: DateTime)
 
 trait RatingPersistence {
   def ratingFor(userId: Int, titleId: Int, ratingType: RatingType): Option[Rating]
@@ -32,4 +35,12 @@ case object LikeRating extends RatingType {
 }
 case object KnowRating extends RatingType {
   override def discriminator: String = "KR"
+}
+
+object RatingType {
+  val typesByKey = Seq(LikeRating, KnowRating).map { t =>
+    (t.discriminator, t)
+  }.toMap
+
+  def apply(key: String): RatingType = typesByKey(key)
 }

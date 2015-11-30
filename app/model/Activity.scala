@@ -1,6 +1,5 @@
-package service
+package model
 
-import model.{Video, Title}
 import org.joda.time.DateTime
 
 sealed trait Activity {

@@ -1,7 +1,7 @@
 package serialization
 
+import model.SerializedActivity
 import org.json4s.jackson.Serialization._
-import service.SerializedActivity
 
 class BaseActivitySerializer extends JsonSerializer[SerializedActivity] {
   import JsonSerialization._
