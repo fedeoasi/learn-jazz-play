@@ -1,0 +1,15 @@
+@()
+@main("Favorite Titles") {
+    @jsimport("ratings.js")
+    <div id="ratingsDiv"></div>
+
+    <script id="ratingsTemplate" type="text/x-handlebars-template">
+        <ul class="list-group">
+          {{#each titlesWithRatings}}
+            <li class="list-group-item">
+                <a href="/titles/{{title.id}}">{{title.title}} ({{rating.rating}})</a>
+            </li>
+          {{/each}}
+        </ul>
+    </script>
+}

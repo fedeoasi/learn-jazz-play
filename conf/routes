@@ -23,12 +23,14 @@ GET /api/titles/random  @controllers.TitlesController.random
 GET /api/titles/:id     @controllers.TitlesController.get(id: Int)
 
 # Ratings
-GET     /api/titles/:titleId/ratings/know         @controllers.RatingsController.know(titleId: Int)
-POST    /api/titles/:titleId/ratings/know         @controllers.RatingsController.postKnow(titleId: Int)
-DELETE  /api/titles/:titleId/ratings/know         @controllers.RatingsController.cancelKnow(titleId: Int)
-GET     /api/titles/:titleId/ratings/like         @controllers.RatingsController.like(titleId: Int)
-POST    /api/titles/:titleId/ratings/like         @controllers.RatingsController.postLike(titleId: Int)
-DELETE  /api/titles/:titleId/ratings/like         @controllers.RatingsController.cancelLike(titleId: Int)
+GET     /api/titles/:titleId/ratings/know  @controllers.RatingsController.know(titleId: Int)
+POST    /api/titles/:titleId/ratings/know  @controllers.RatingsController.postKnow(titleId: Int)
+DELETE  /api/titles/:titleId/ratings/know  @controllers.RatingsController.cancelKnow(titleId: Int)
+GET     /api/titles/:titleId/ratings/like  @controllers.RatingsController.like(titleId: Int)
+POST    /api/titles/:titleId/ratings/like  @controllers.RatingsController.postLike(titleId: Int)
+DELETE  /api/titles/:titleId/ratings/like  @controllers.RatingsController.cancelLike(titleId: Int)
+GET     /api/ratings/favoriteTitles        @controllers.RatingsController.favoriteTitleRatings
+GET     /ratings                           @controllers.RatingsController.viewRatings
 
 # Videos
 GET  /videos                      @controllers.VideosController.view()

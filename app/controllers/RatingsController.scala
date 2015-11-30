@@ -5,15 +5,23 @@ import persistence.general.{GeneralPersistenceService, KnowRating, LikeRating, R
 import play.api.data.Form
 import play.api.data.Forms._
 import securesocial.core.{RuntimeEnvironment, SecureSocial}
-import service.User
+import serialization.TitleWithRatingSerializer
+import service.{RatingService, User}
 
 class RatingsController @Inject() (generalPersistenceService: GeneralPersistenceService,
+                                   ratingService: RatingService,
                                    override implicit val env: RuntimeEnvironment[User])
   extends SecureSocial[User] {
 
   case class RatingFormData(rating: String)
 
-  private val ratingForm = Form(mapping("rating" -> text)(RatingFormData.apply)(RatingFormData.unapply))
+  private val ratingForm = Form(
+    mapping("rating" -> text)
+    (RatingFormData.apply)
+    (RatingFormData.unapply)
+  )
+
+  private val serializer = new TitleWithRatingSerializer
 
   def know(titleId: Int) = SecuredAction { implicit r =>
     get(titleId, KnowRating)
@@ -37,6 +45,14 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
 
   def cancelLike(titleId: Int) = SecuredAction { implicit r =>
     cancel(titleId, LikeRating)
+  }
+
+  def favoriteTitleRatings = SecuredAction { implicit r =>
+    Ok(serializer.serializeMany(ratingService.favoriteTitles(r.user)))
+  }
+
+  def viewRatings = SecuredAction { implicit r =>
+    Ok(views.html.ratings())
   }
 
   private def get(titleId: Int, ratingType: RatingType)
