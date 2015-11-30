@@ -11,7 +11,7 @@ class UserServiceSpec extends FunSpec with Matchers {
   describe("Find") {
     it("does not find a non existent user") {
       service.find("userpass", "hello@gmail.com").foreach { result =>
-        result should be(None)
+        result shouldBe None
       }
     }
   }

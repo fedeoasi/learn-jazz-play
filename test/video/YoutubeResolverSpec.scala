@@ -24,7 +24,7 @@ class YoutubeResolverSpec extends FunSpec with Matchers {
       it("should extract the id from a regular url") {
         for (u <- urls) {
           withClue(s"Extracting id from: $u") {
-            resolver.extractVideoId(u) should be(Some("j4dMnAPZu70"))
+            resolver.extractVideoId(u) shouldBe Some("j4dMnAPZu70")
           }
         }
       }

@@ -14,7 +14,7 @@ class AuthPersistenceServiceSpec extends FunSpec with Matchers {
 
       it("should not find a non existent user") {
         val ps = buildPersistenceService()
-        ps.findUserByUserId("uid") should be(None)
+        ps.findUserByUserId("uid") shouldBe None
       }
 
       it("should add a new user and find it by user id") {
@@ -22,25 +22,25 @@ class AuthPersistenceServiceSpec extends FunSpec with Matchers {
         val profile = buildProfile("pid", "uid", AuthenticationMethod.UserPassword, Some("First"), Some("Last"),
           Some("First Last"), Some("abc@gmail.com"), Some("avatar"), None, None, somePasswordInfo)
         ps.saveUser(profile)
-        ps.findUserByUserId("uid") should be(Some(profile))
+        ps.findUserByUserId("uid") shouldBe Some(profile)
       }
 
       it("does not recreate the same user") {
         val ps = buildPersistenceService()
         val profile = buildProfile("pid", "uid", AuthenticationMethod.UserPassword, Some("First"), Some("Last"),
           Some("First Last"), Some("abc@gmail.com"), Some("avatar"), None, None, somePasswordInfo)
-        ps.userCount should be(0)
+        ps.userCount shouldBe 0
         ps.saveUser(profile)
-        ps.userCount should be(1)
+        ps.userCount shouldBe 1
         ps.saveUser(profile)
-        ps.userCount should be(1)
+        ps.userCount shouldBe 1
       }
 
       it("should add a new user and find it by email") {
         val ps = buildPersistenceService()
         val profile = buildProfile("pid", "uid", AuthenticationMethod.UserPassword, email = Some("abc@gmail.com"))
         ps.saveUser(profile)
-        ps.findUserByUserId("uid") should be(Some(profile))
+        ps.findUserByUserId("uid") shouldBe Some(profile)
       }
 
       it("should find the password info for an existing user") {
@@ -49,7 +49,7 @@ class AuthPersistenceServiceSpec extends FunSpec with Matchers {
           Some("First Last"), Some("abc@gmail.com"), Some("avatar"), None, None, somePasswordInfo)
         ps.saveUser(profile)
         val user = User(profile, List(profile), 1)
-        ps.passwordInfoFor(user.main) should be(somePasswordInfo)
+        ps.passwordInfoFor(user.main) shouldBe somePasswordInfo
       }
     }
 
@@ -59,24 +59,24 @@ class AuthPersistenceServiceSpec extends FunSpec with Matchers {
 
       it("should not find a non existent token") {
         val ps = buildPersistenceService()
-        ps.findToken("asasdjfhkasdf") should be(None)
+        ps.findToken("asasdjfhkasdf") shouldBe None
       }
 
       it("should add and find a token") {
         val ps = buildPersistenceService()
         ps.saveToken(token)
-        ps.findToken(uuid) should be(Some(token))
+        ps.findToken(uuid) shouldBe Some(token)
       }
 
       it("should not delete a non existent token") {
         val ps = buildPersistenceService()
-        ps.deleteToken("aksdfaasdf") should be(None)
+        ps.deleteToken("aksdfaasdf") shouldBe None
       }
 
       it("should add and delete token") {
         val ps = buildPersistenceService()
         ps.saveToken(token)
-        ps.deleteToken(uuid) should be(Some(token))
+        ps.deleteToken(uuid) shouldBe Some(token)
       }
     }
   }
