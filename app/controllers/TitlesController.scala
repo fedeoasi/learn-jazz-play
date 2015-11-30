@@ -31,7 +31,7 @@ class TitlesController @Inject() (titleRepository: TitleRepository,
     }
   }
 
-  def viewAll = SecuredAction { implicit r =>
+  def viewAll() = SecuredAction { implicit r =>
     Ok(views.html.titles.titles())
   }
 }

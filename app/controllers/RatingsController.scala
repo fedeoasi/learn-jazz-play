@@ -51,7 +51,7 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
     Ok(serializer.serializeMany(ratingService.favoriteTitles(r.user)))
   }
 
-  def viewRatings = SecuredAction { implicit r =>
+  def viewAll = SecuredAction { implicit r =>
     Ok(views.html.ratings())
   }
 

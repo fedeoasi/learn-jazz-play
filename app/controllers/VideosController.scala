@@ -25,7 +25,7 @@ class VideosController @Inject() (generalPersistenceService: GeneralPersistenceS
   )
   private val youtubeResolver = new YoutubeResolver
 
-  def view() = SecuredAction { implicit r =>
+  def viewAll() = SecuredAction { implicit r =>
     Ok(views.html.videos())
   }
 
