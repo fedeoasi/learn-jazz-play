@@ -13,7 +13,7 @@ class TitlesController @Inject() (titleRepository: TitleRepository,
 
   def index(id: Int) = SecuredAction { implicit request =>
     val title = titleRepository.get(id).fold("Title")(_.title)
-    Ok(views.html.title(id, title))
+    Ok(views.html.titles.title(id, title))
   }
 
   def all = SecuredAction { implicit request =>
@@ -32,6 +32,6 @@ class TitlesController @Inject() (titleRepository: TitleRepository,
   }
 
   def viewAll = SecuredAction { implicit r =>
-    Ok(views.html.titles())
+    Ok(views.html.titles.titles())
   }
 }
