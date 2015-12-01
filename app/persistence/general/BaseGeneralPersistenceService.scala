@@ -1,6 +1,6 @@
 package persistence.general
 
-import model.{Video, VideoInput}
+import model.{Rating, RatingType, Video, VideoInput}
 import persistence.Daos._
 import play.api.Logger
 import time.NowProvider

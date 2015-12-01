@@ -1,10 +1,10 @@
 package service
 
+import model.RatingTypes._
 import model.{EnteredVideo, RatedTitle, VideoInput}
 import org.scalatest.{FunSpec, Matchers}
 import persistence.PersistenceSpecHelper._
 import persistence.auth.AuthSpecHelper._
-import persistence.general.{KnowRating, LikeRating}
 import titles.TitleSpecHelper._
 
 class ActivityServiceSpec extends FunSpec with Matchers {

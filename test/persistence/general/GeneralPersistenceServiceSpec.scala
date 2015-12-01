@@ -1,6 +1,7 @@
 package persistence.general
 
-import model.VideoInput
+import model.RatingTypes._
+import model.{Rating, VideoInput}
 import org.joda.time.DateTime
 import org.scalatest.{FunSpec, Matchers}
 import time.FixedNowProvider

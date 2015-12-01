@@ -3,9 +3,10 @@ package persistence
 import java.io.File
 import java.util.UUID
 
+import model.RatingTypes._
 import org.scalatest.{BeforeAndAfterAll, Matchers, FunSpec}
 import persistence.auth.AuthPersistenceServiceImpl
-import persistence.general.{LikeRating, GeneralPersistenceServiceImpl}
+import persistence.general.GeneralPersistenceServiceImpl
 
 class DatabaseMigrationSpec extends FunSpec with Matchers with BeforeAndAfterAll {
   private val dbName = s"testDb${UUID.randomUUID()}"

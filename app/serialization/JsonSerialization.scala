@@ -1,10 +1,9 @@
 package serialization
 
-import model.Activity
+import model.{Activity, RatingType}
 import org.joda.time.DateTime
 import org.json4s.JsonAST.JString
-import org.json4s.{FieldSerializer, CustomSerializer, DefaultFormats}
-import persistence.general.RatingType
+import org.json4s.{CustomSerializer, DefaultFormats, FieldSerializer}
 
 object JsonSerialization {
   implicit lazy val formats = DefaultFormats +

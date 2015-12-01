@@ -1,7 +1,9 @@
 package controllers
 
 import com.google.inject.Inject
-import persistence.general.{GeneralPersistenceService, KnowRating, LikeRating, RatingType}
+import model.RatingType
+import model.RatingTypes._
+import persistence.general.GeneralPersistenceService
 import play.api.data.Form
 import play.api.data.Forms._
 import securesocial.core.{RuntimeEnvironment, SecureSocial}

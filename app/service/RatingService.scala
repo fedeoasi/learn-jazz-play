@@ -1,8 +1,9 @@
 package service
 
 import com.google.inject.{ImplementedBy, Inject}
-import model.Title
-import persistence.general.{LikeRating, Rating, GeneralPersistenceService}
+import model.RatingTypes._
+import model.{Rating, Title}
+import persistence.general.GeneralPersistenceService
 import titles.TitleRepository
 
 case class TitleWithRating(title: Title, rating: Rating)

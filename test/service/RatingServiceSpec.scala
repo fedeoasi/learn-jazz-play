@@ -1,9 +1,11 @@
 package service
 
+import model.Rating
+import model.RatingTypes._
 import org.scalatest.{FunSpec, Matchers}
 import persistence.PersistenceSpecHelper._
 import persistence.auth.AuthSpecHelper._
-import persistence.general.{KnowRating, GeneralPersistenceService, Rating, LikeRating}
+import persistence.general.GeneralPersistenceService
 import titles.TitleSpecHelper._
 
 class RatingServiceSpec extends FunSpec with Matchers {
