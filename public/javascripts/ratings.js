@@ -7,6 +7,9 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(data) {
             $('#ratingsDiv').append(template(data));
+            $.each($('.rateit'), function(i, item) {
+                $(item).rateit();
+            });
         },
         error: function() {
             console.log('Error retrieving ratings');

@@ -1,5 +1,6 @@
 @()
 @main("Favorite Titles") {
+    @rateit()
     @jsimport("ratings.js")
     <div id="ratingsDiv"></div>
 
@@ -7,7 +8,8 @@
         <ul class="list-group">
           {{#each titlesWithRatings}}
             <li class="list-group-item">
-                <a href="/titles/{{title.id}}">{{title.title}} ({{rating.rating}})</a>
+                <div class="rateit" data-rateit-value="{{rating.rating}}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                <a href="/titles/{{title.id}}">{{title.title}}</a>
             </li>
           {{/each}}
         </ul>
