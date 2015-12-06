@@ -20,7 +20,6 @@ object DownloadTitlesFromWikipedia {
 
     val titlesByName = titleRepository.all.groupBy(_.title)
 
-    //titles.foreach(println)
     println(s"Found ${titles.size} titles")
     val count = titles.count(t => titlesByName.contains(t.name))
     println(s"Our repository includes $count of the standards on Wikipedia")
@@ -30,7 +29,7 @@ object DownloadTitlesFromWikipedia {
 
   def writeCsv(titles: Seq[Title], filePath: String): Unit = {
     val csvWriter = CSVWriter.open(new File(filePath))
-    csvWriter.writeRow(Seq("Name", "Link"))
+    csvWriter.writeRow(Seq("Title", "Link"))
     csvWriter.writeAll(titles.map { t => Seq[String](t.name, t.link) })
     csvWriter.close()
   }

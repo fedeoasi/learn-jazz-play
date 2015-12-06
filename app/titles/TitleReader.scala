@@ -11,6 +11,7 @@ object TitleKeys {
   val Title = "Title"
   val Rank = "Rank"
   val Year = "Year"
+  val Link = "Link"
 }
 
 class TitleReader {
@@ -29,7 +30,11 @@ class TitleReader {
     csvReader.allWithHeaders().zipWithIndex.map { case (stringMap, i) =>
       try {
         val title = stringMap(TitleKeys.Title).replace("\u00a0", "").trim
-        Title(i, title, stringMap(TitleKeys.Year).toInt, stringMap(TitleKeys.Rank).toInt)
+        val link = {
+          val linkValue = stringMap(TitleKeys.Link)
+          if (linkValue.isEmpty) None else Some(linkValue)
+        }
+        Title(i, title, stringMap(TitleKeys.Year).toInt, stringMap(TitleKeys.Rank).toInt, link)
       } catch {
         case NonFatal(t) =>
           println(s"Error while processing line: $stringMap")

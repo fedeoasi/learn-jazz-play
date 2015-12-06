@@ -94,10 +94,13 @@ function loadTitle() {
             dl.append($('<dd></dd>').html(data.year));
             dl.append($('<dt></dt>').html("Rank"));
             dl.append($('<dd></dd>').html(data.ranking));
+            if (data.link) {
+                dl.append('<a href="https://en.wikipedia.org' + data.link + '">Wikipedia Link</a>');
+            }
             $('#titleDetailDiv').html(dl);
         },
         error: function(data) {
-            $('#titleDetailDiv').html('Error loading a random title');
+            $('#titleDetailDiv').html('Error loading title');
         }
     });
 }
