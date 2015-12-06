@@ -87,7 +87,7 @@ function loadTitle() {
         url: '/api/titles/' + titleId,
         dataType: 'json',
         success: function(data) {
-            var dl = $('<dl></dl>')//.attr('class', 'dl-horizontal');
+            var dl = $('<dl></dl>');
             dl.append($('<dt></dt>').html("Title"));
             dl.append($('<dd></dd>').html(data.title));
             dl.append($('<dt></dt>').html("Year"));
@@ -95,14 +95,25 @@ function loadTitle() {
             dl.append($('<dt></dt>').html("Rank"));
             dl.append($('<dd></dd>').html(data.ranking));
             if (data.link) {
-                dl.append('<a href="https://en.wikipedia.org' + data.link + '">Wikipedia Link</a>');
+                var wikiLink = 'https://en.wikipedia.org' + escape(data.link);
+                dl.append(popupLink(wikiLink, 'See on Wikipedia') + '<br>');
             }
+            var youtubeLink = 'https://www.youtube.com/results?search_query=' + escape(data.title);
+            dl.append(popupLink(youtubeLink, 'Search on Youtube'));
             $('#titleDetailDiv').html(dl);
         },
-        error: function(data) {
+        error: function() {
             $('#titleDetailDiv').html('Error loading title');
         }
     });
+}
+
+function escape(s) {
+    return s.replace(/'/g, '').replace(/"/g, '');
+}
+
+function popupLink(url, name) {
+    return '<a onclick="window.open(\'' + url + '\', \'_blank\', \'location=yes,height=570,width=520,scrollbars=yes,status=yes\');">' + name + '</a>';
 }
 
 function proxifyUrl(url) {
