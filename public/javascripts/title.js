@@ -98,7 +98,7 @@ function loadTitle() {
                 var wikiLink = 'https://en.wikipedia.org' + escape(data.link);
                 dl.append(popupLink(wikiLink, 'See on Wikipedia') + '<br>');
             }
-            var youtubeLink = 'https://www.youtube.com/results?search_query=' + escape(data.title);
+            var youtubeLink = 'https://www.youtube.com/results?search_query=' + escape(data.title) + ' jazz';
             dl.append(popupLink(youtubeLink, 'Search on Youtube'));
             $('#titleDetailDiv').html(dl);
         },
