@@ -8,14 +8,15 @@ import play.api.Play.current
 import play.api.data.Form
 import play.api.data.Forms._
 import play.utils.UriEncoding
+import securesocial.MyRuntimeEnvironment
 import securesocial.core.{RuntimeEnvironment, SecureSocial}
 import serialization.VideosSerializer
 import service.User
 import video.YoutubeResolver
 
 class VideosController @Inject() (generalPersistenceService: GeneralPersistenceService,
-                                 override implicit val env: RuntimeEnvironment[User])
-  extends SecureSocial[User] {
+                                 override implicit val env: MyRuntimeEnvironment)
+  extends SecureSocial {
 
   private val logger = Logger.logger
   private val videoSerializer = new VideosSerializer

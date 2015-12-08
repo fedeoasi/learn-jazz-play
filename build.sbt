@@ -1,5 +1,5 @@
 import com.typesafe.sbt.less.Import.LessKeys
-import play.PlayScala
+import play.sbt.PlayImport._
 
 name := """learn-jazz-play"""
 
@@ -7,11 +7,11 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.7"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
-lazy val securesocial = "ws.securesocial" %% "securesocial" % "3.0-M3"
+lazy val securesocial = "ws.securesocial" %% "securesocial" % "3.0-M4"
 lazy val webJarsPlay = "org.webjars" %% "webjars-play" % "2.3.0-2"
 lazy val webJarsBootstrap = "org.webjars" % "bootstrap" % "3.1.1-2"
 lazy val scalatestPlus = "org.scalatestplus" %% "play" % "1.2.0" % "test"
@@ -29,7 +29,7 @@ lazy val dbDependencies = Seq(slick, sqlite, jodaMapper, flyway)
 
 lazy val nscalaTime = "com.github.nscala-time" %% "nscala-time" % "2.6.0"
 
-lazy val guice = "com.google.inject" % "guice" % "3.0"
+lazy val guice = "com.google.inject" % "guice" % "4.0"
 lazy val javaInject = "javax.inject" % "javax.inject" % "1"
 lazy val diDependencies = Seq(guice, javaInject)
 
@@ -50,7 +50,6 @@ libraryDependencies ++= Seq(
   json4s,
   csv,
   jdbc,
-  anorm,
   cache,
   ws,
   jsoup,

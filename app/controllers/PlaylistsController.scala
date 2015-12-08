@@ -2,14 +2,15 @@ package controllers
 
 import com.google.inject.Inject
 import playlist.{HybridPlaylist, PlaylistGenerator, PlaylistSerializer}
+import securesocial.MyRuntimeEnvironment
 import securesocial.core.{RuntimeEnvironment, SecureSocial}
 import service.User
 import titles.TitleRepository
 
 class PlaylistsController @Inject() (titleRepository: TitleRepository,
                                      generator: PlaylistGenerator)
-                                    (override implicit val env: RuntimeEnvironment[User])
-  extends SecureSocial[User] {
+                                    (override implicit val env: MyRuntimeEnvironment)
+  extends SecureSocial {
 
   val serializer = new PlaylistSerializer
 

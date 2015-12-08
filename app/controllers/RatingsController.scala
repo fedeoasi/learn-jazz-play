@@ -6,14 +6,15 @@ import model.RatingTypes._
 import persistence.general.GeneralPersistenceService
 import play.api.data.Form
 import play.api.data.Forms._
+import securesocial.MyRuntimeEnvironment
 import securesocial.core.{RuntimeEnvironment, SecureSocial}
 import serialization.TitleWithRatingSerializer
 import service.{RatingService, User}
 
 class RatingsController @Inject() (generalPersistenceService: GeneralPersistenceService,
                                    ratingService: RatingService,
-                                   override implicit val env: RuntimeEnvironment[User])
-  extends SecureSocial[User] {
+                                   override implicit val env: MyRuntimeEnvironment)
+  extends SecureSocial {
 
   case class RatingFormData(rating: String)
 

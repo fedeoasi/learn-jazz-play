@@ -43,7 +43,6 @@ GET  /api/resolveLink             @controllers.VideosController.resolveLink(url:
 GET  /playlists/new      @controllers.PlaylistsController.view
 GET  /api/playlists/new  @controllers.PlaylistsController.generate
 
-GET /current-user  @controllers.ApplicationController.currentUser
 GET /custom/login  @controllers.CustomLoginController.login
 GET /logout        @controllers.CustomLoginController.logout
 
