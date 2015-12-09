@@ -1,5 +1,6 @@
 package model
 
+import links.Link
 import org.joda.time.DateTime
 
 sealed trait Activity {
@@ -15,7 +16,7 @@ case class SerializedActivity(timestamp: String, description: String)
 case class RatedTitle(timestamp: DateTime,
                       title: Title) extends Activity {
   override def description: String = {
-    s"Rated title ${title.title}"
+    s"""Rated title ${Link(title)}"""
   }
 }
 
