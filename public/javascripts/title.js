@@ -113,7 +113,7 @@ function escape(s) {
 }
 
 function popupLink(url, name) {
-    return '<a onclick="window.open(\'' + url + '\', \'_blank\', \'location=yes,height=570,width=520,scrollbars=yes,status=yes\');">' + name + '</a>';
+    return '<a onclick="window.open(\'' + url + '\', \'_blank\', \'location=yes,height=570,width=700,scrollbars=yes,status=yes\');">' + name + '</a>';
 }
 
 function proxifyUrl(url) {
