@@ -5,6 +5,7 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import play.api.Play.current
 import play.api.mvc.WebSocket
+import play.api.mvc.WebSocket.HandlerProps
 import realtime.MyWebSocketActor
 import realtime.NotificationsActor.{SocketConnect, SocketMessage}
 import securesocial.MyRuntimeEnvironment
@@ -14,8 +15,18 @@ class NotificationsController @Inject() (@Named("notifications") notificationsAc
                                          override implicit val env: MyRuntimeEnvironment)
   extends SecureSocial {
 
-  def socket() = WebSocket.acceptWithActor[String, String] { request =>
-    out =>
+  def socket() = {
+    WebSocket.tryAcceptWithActor[String, String] { implicit request =>
+      SecureSocial.currentUser.map {
+        case Some(user) =>
+          Right(handlerProps)
+        case None =>
+          Left(Forbidden)
+      }
+    }
+  }
+
+  private def handlerProps: HandlerProps = { out =>
       notificationsActor ! SocketConnect(out)
       MyWebSocketActor.props(out, notificationsActor)
   }
