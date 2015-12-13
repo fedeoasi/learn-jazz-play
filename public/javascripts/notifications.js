@@ -47,7 +47,7 @@ $(document).ready(function() {
         console.log(event.data);
         $.notify(event.data, {
             style: 'html',
-            class: 'warn',
+            className: 'success',
             position: 'top center'
         });
     }
