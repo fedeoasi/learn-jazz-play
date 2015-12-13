@@ -1,18 +1,25 @@
 package controllers
 
+import akka.actor.ActorRef
 import com.google.inject.Inject
+import com.google.inject.name.Named
+import links.Link
 import model.RatingType
 import model.RatingTypes._
 import persistence.general.GeneralPersistenceService
 import play.api.data.Form
 import play.api.data.Forms._
+import realtime.NotificationsActor.SocketMessage
 import securesocial.MyRuntimeEnvironment
-import securesocial.core.{RuntimeEnvironment, SecureSocial}
+import securesocial.core.SecureSocial
 import serialization.TitleWithRatingSerializer
-import service.{RatingService, User}
+import service.RatingService
+import titles.TitleRepository
 
 class RatingsController @Inject() (generalPersistenceService: GeneralPersistenceService,
                                    ratingService: RatingService,
+                                   titleRepository: TitleRepository,
+                                   @Named("notifications") notificationsActor: ActorRef,
                                    override implicit val env: MyRuntimeEnvironment)
   extends SecureSocial {
 
@@ -67,8 +74,10 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
   private def post(titleId: Int, ratingType: RatingType)
                   (implicit r: SecuredRequest[_]) = {
     val boundForm = ratingForm.bindFromRequest()
+    val title = titleRepository(titleId)
     val rating = boundForm.get.rating.toDouble
     generalPersistenceService.setRating(r.user.id, titleId, ratingType, rating)
+    notificationsActor ! SocketMessage(s"Somebody rated ${Link(title)}")
     Ok("Rating set")
   }
 

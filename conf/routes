@@ -11,6 +11,10 @@ GET /assets/*file  controllers.Assets.at(path="/public", file)
 # Email
 GET /emails/random  @controllers.EmailsController.sendRandom
 
+# Notifications
+GET /socket                  @controllers.NotificationsController.socket()
+GET /api/notifications/test  @controllers.NotificationsController.hello()
+
 # Activity
 GET /api/activities  @controllers.ActivityController.listActivity()
 GET /api/stats       @controllers.ActivityController.userStats()

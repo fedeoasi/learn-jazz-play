@@ -10,9 +10,12 @@
         <script src='@routes.Assets.at("lib/handlebars/handlebars.js")' type="text/javascript"></script>
         <script src='@routes.Assets.at("lib/jquery/jquery.js")' type="text/javascript"></script>
         @common.datatables()
+        @jsimport("notify.js")
+        @jsimport("notifications.js")
     </head>
     <body>
         @common.menu()
+        <div id="notifications" data-notify-html="true"></div>
         <div class="container-fluid">
             <h1>@title</h1>
             @content
