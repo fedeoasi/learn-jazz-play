@@ -77,7 +77,7 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
     val title = titleRepository(titleId)
     val rating = boundForm.get.rating.toDouble
     generalPersistenceService.setRating(r.user.id, titleId, ratingType, rating)
-    notificationsActor ! SocketMessage(s"rated ${Link(title)}", r.user)
+    notificationsActor ! SocketMessage(r.user, s"rated ${Link(title)}")
     Ok("Rating set")
   }
 

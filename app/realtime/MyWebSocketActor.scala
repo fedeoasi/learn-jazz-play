@@ -18,7 +18,7 @@ class MyWebSocketActor(out: ActorRef, notificationsActor: ActorRef, user: User) 
 
   @throws[Exception](classOf[Exception])
   override def postStop(): Unit = {
-    notificationsActor ! SocketDisconnect(out, user)
+    notificationsActor ! SocketDisconnect(user, out)
     super.postStop()
   }
 }

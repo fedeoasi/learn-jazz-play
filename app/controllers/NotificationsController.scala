@@ -27,12 +27,12 @@ class NotificationsController @Inject() (@Named("notifications") notificationsAc
   }
 
   private def handlerProps(user: env.U): HandlerProps = { out =>
-      notificationsActor ! SocketConnect(out, user)
+      notificationsActor ! SocketConnect(user, out)
       MyWebSocketActor.props(out, notificationsActor, user)
   }
 
   def hello() = SecuredAction { implicit r =>
-    notificationsActor ! SocketMessage("Hello", r.user)
+    notificationsActor ! SocketMessage(r.user, "Hello")
     Ok("Done")
   }
 }
