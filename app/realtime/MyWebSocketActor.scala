@@ -1,7 +1,7 @@
 package realtime
 
 import akka.actor._
-import realtime.NotificationsActor.SocketDisconnect
+import realtime.NotificationsProtocol.SocketDisconnect
 import service.User
 
 object MyWebSocketActor {

@@ -3,8 +3,8 @@ package realtime
 import akka.actor.{ActorRef, Actor}
 import service.User
 
-class NotificationsActor extends Actor {
-  import NotificationsActor._
+class NotificationsProtocol extends Actor {
+  import NotificationsProtocol._
 
   var socketsByUser: Map[User, List[SocketConnect]] = Map.empty
 
@@ -24,7 +24,7 @@ class NotificationsActor extends Actor {
   }
 }
 
-object NotificationsActor {
+object NotificationsProtocol {
   case class SocketConnect(user: User, out: ActorRef)
   case class SocketDisconnect(user: User, out: ActorRef)
   case class SocketMessage(user: User, msg: String)

@@ -9,7 +9,7 @@ import model.RatingTypes._
 import persistence.general.GeneralPersistenceService
 import play.api.data.Form
 import play.api.data.Forms._
-import realtime.NotificationsActor.SocketMessage
+import realtime.NotificationsProtocol.SocketMessage
 import securesocial.MyRuntimeEnvironment
 import securesocial.core.SecureSocial
 import serialization.TitleWithRatingSerializer

@@ -7,7 +7,7 @@ import play.api.Play.current
 import play.api.mvc.WebSocket
 import play.api.mvc.WebSocket.HandlerProps
 import realtime.MyWebSocketActor
-import realtime.NotificationsActor.{SocketConnect, SocketMessage}
+import realtime.NotificationsProtocol.{SocketConnect, SocketMessage}
 import securesocial.MyRuntimeEnvironment
 import securesocial.core.SecureSocial
 
