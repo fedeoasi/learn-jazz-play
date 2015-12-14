@@ -1,26 +1,31 @@
 package realtime
 
 import akka.actor.{ActorRef, Actor}
-
+import service.User
 
 class NotificationsActor extends Actor {
   import NotificationsActor._
 
-  var sockets: List[SocketConnect] = List.empty
+  var socketsByUser: Map[User, List[SocketConnect]] = Map.empty
 
   override def receive: Receive = {
     case s: SocketConnect =>
-      sockets = s :: sockets
-      println(s"${sockets.size} clients")
-    case SocketDisconnect(out) =>
-      sockets = sockets.filter(_.out != out)
-    case SocketMessage(msg) =>
-      sockets.foreach(_.out ! msg)
+      val socketsForUser = socketsByUser.getOrElse(s.user, List.empty[SocketConnect])
+      socketsByUser = socketsByUser.updated(s.user, s :: socketsForUser)
+    case SocketDisconnect(out, user) =>
+      val socketsForUser = socketsByUser.getOrElse(user, List.empty[SocketConnect])
+      val withoutSocket = socketsForUser.filter(_.out != out)
+      socketsByUser = socketsByUser.updated(user, withoutSocket)
+    case SocketMessage(msg, user) =>
+      socketsByUser.foreach { case (u, ss) =>
+        val subject = if (u == user) "You" else "Somebody"
+        ss.foreach(_.out ! s"$subject $msg")
+      }
   }
 }
 
 object NotificationsActor {
-  case class SocketConnect(out: ActorRef)
-  case class SocketDisconnect(out: ActorRef)
-  case class SocketMessage(msg: String)
+  case class SocketConnect(out: ActorRef, user: User)
+  case class SocketDisconnect(out: ActorRef, user: User)
+  case class SocketMessage(msg: String, user: User)
 }

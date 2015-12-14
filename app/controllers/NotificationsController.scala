@@ -19,20 +19,20 @@ class NotificationsController @Inject() (@Named("notifications") notificationsAc
     WebSocket.tryAcceptWithActor[String, String] { implicit request =>
       SecureSocial.currentUser.map {
         case Some(user) =>
-          Right(handlerProps)
+          Right(handlerProps(user))
         case None =>
           Left(Forbidden)
       }
     }
   }
 
-  private def handlerProps: HandlerProps = { out =>
-      notificationsActor ! SocketConnect(out)
-      MyWebSocketActor.props(out, notificationsActor)
+  private def handlerProps(user: env.U): HandlerProps = { out =>
+      notificationsActor ! SocketConnect(out, user)
+      MyWebSocketActor.props(out, notificationsActor, user)
   }
 
   def hello() = SecuredAction { implicit r =>
-    notificationsActor ! SocketMessage("Hello")
+    notificationsActor ! SocketMessage("Hello", r.user)
     Ok("Done")
   }
 }
