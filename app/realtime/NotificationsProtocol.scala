@@ -10,10 +10,10 @@ class NotificationsProtocol extends Actor {
 
   override def receive: Receive = {
     case s: SocketConnect =>
-      val socketsForUser = socketsByUser.getOrElse(s.user, List.empty[SocketConnect])
+      val socketsForUser = getSocketsForUser(s.user)
       socketsByUser = socketsByUser.updated(s.user, s :: socketsForUser)
     case SocketDisconnect(user, out) =>
-      val socketsForUser = socketsByUser.getOrElse(user, List.empty[SocketConnect])
+      val socketsForUser = getSocketsForUser(user)
       val withoutSocket = socketsForUser.filter(_.out != out)
       socketsByUser = socketsByUser.updated(user, withoutSocket)
     case SocketMessage(user, msg) =>
@@ -21,6 +21,10 @@ class NotificationsProtocol extends Actor {
         val subject = if (u == user) "You" else "Somebody"
         ss.foreach(_.out ! s"$subject $msg")
       }
+  }
+
+  private def getSocketsForUser(user: User): List[SocketConnect] = {
+    socketsByUser.getOrElse(user, List.empty[SocketConnect])
   }
 }
 
