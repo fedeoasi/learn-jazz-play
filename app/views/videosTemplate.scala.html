@@ -1,0 +1,9 @@
+@(size: String = "full")
+
+<script id="videosTemplate" type="text/x-handlebars-template">
+    <ul id="videoGallery" class="@size">
+        {{#each videos}}
+        <li><div class="videoWrapper"><div class="youtube" id="{{videoId}}"></div></div></li>
+        {{/each}}
+    </ul>
+</script>

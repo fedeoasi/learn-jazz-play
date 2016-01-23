@@ -26,7 +26,7 @@ $(document).ready(function() {
             saveButton.attr('id', 'saveVideoButton');
             saveButton.attr('class', 'btn btn-primary');
             saveButton.attr('type', 'button');
-            var url = $('#preview-container2 a').attr('href')
+            var url = $('#preview-container2 a').attr('href');
             saveButton.click(function() {
                 jqAjax({
                     url: '/api/titles/' + titleId + '/videos',
@@ -43,7 +43,6 @@ $(document).ready(function() {
             $(previewContainer).append(saveButton);
         }
     });
-
     retrieveVideos('/api/titles/' + titleId + '/videos');
 });
 

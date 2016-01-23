@@ -3,15 +3,14 @@ function setupVideoFrames() {
     var videos = document.getElementsByClassName("youtube");
 
     for (var i = 0; i< videos.length; i++) {
-
         var youtube = videos[i];
 
         // Based on the YouTube ID, we can easily find the thumbnail image
         var img = document.createElement("img");
-        var videoUrl = "http://i.ytimg.com/vi/" + youtube.id + "/hqdefault.jpg";
+        var videoUrl = "http://i.ytimg.com/vi/" + youtube.id + "/mqdefault.jpg";
         img.setAttribute("src", videoUrl);
         img.setAttribute("class", "thumb");
-
+        img.setAttribute("width", "100%");
 
         // Overlay the Play icon to make it look like a video player
         var circle = document.createElement("div");
@@ -28,10 +27,7 @@ function setupVideoFrames() {
             iframe.setAttribute("src",
                 "https://www.youtube.com/embed/" + this.id
                 + "?autoplay=1&autohide=1&border=0&wmode=opaque&enablejsapi=1");
-
-            // The height and width of the iFrame should be the same as parent
-            iframe.style.width  = this.style.width;
-            iframe.style.height = this.style.height;
+            iframe.setAttribute("allowfullscreen", "true");
 
             // Replace the YouTube thumbnail with YouTube HTML5 Player
             this.parentNode.replaceChild(iframe, this);
@@ -40,16 +36,14 @@ function setupVideoFrames() {
 }
 
 function retrieveVideos(ajaxSource) {
+    var playlistSource = $("#videosTemplate").html();
+    var template = Handlebars.compile(playlistSource);
     jqAjax({
         url: ajaxSource,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
-            $.each(data.videos, function(i, item) {
-                console.log(item);
-                var videoDiv = '<div class="youtube" id="' + item.videoId +  '" style="width:560px; height: 315px;"></div>';
-                $('#videosDiv').append(videoDiv);
-            });
+            $('#videosDiv').append(template(data));
             setupVideoFrames();
         },
         error: function() {
