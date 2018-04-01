@@ -25,7 +25,8 @@ lazy val sqlite = "org.xerial" % "sqlite-jdbc" % "3.8.7"
 lazy val jodaMapper = "com.github.tototoshi" %% "slick-joda-mapper" % "1.2.0"
 lazy val h2 = "com.h2database" % "h2" % "1.4.185"
 lazy val flyway = "org.flywaydb" % "flyway-core" % "3.2.1"
-lazy val dbDependencies = Seq(slick, sqlite, jodaMapper, flyway)
+lazy val postgres = "postgresql" % "postgresql" % "9.1-901.jdbc3"
+lazy val dbDependencies = Seq(slick, sqlite, jodaMapper, flyway, postgres)
 
 lazy val nscalaTime = "com.github.nscala-time" %% "nscala-time" % "2.6.0"
 
@@ -63,3 +64,7 @@ excludeFilter in (Assets, LessKeys.less) := "_*.less"
 LessKeys.compress := true
 
 LessKeys.verbose := true
+
+enablePlugins(JavaAppPackaging, PlayScala)
+
+herokuAppName in Compile := "learnjazz"

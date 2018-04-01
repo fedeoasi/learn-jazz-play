@@ -1,21 +1,19 @@
 package modules
 
 import com.google.inject.AbstractModule
-import persistence.SQLiteDatabaseInitializer
+import persistence.DatabaseProvider
 import play.libs.akka.AkkaGuiceSupport
 import realtime.NotificationsProtocol
-import securesocial.MyRuntimeEnvironment
+import securesocial.{MyRuntimeEnvironment, MyRuntimeEnvironmentProvider}
 import titles.{TitleRepository, TitleRepositoryProvider}
 
 class AppModule extends AbstractModule with AkkaGuiceSupport {
-  private val database = SQLiteDatabaseInitializer.database("courses")
-
   import scala.slick.driver.JdbcDriver.simple._
 
   override def configure(): Unit = {
     bindActor(classOf[NotificationsProtocol], "notifications")
-    bind(classOf[Database]).toInstance(database)
-    bind(classOf[MyRuntimeEnvironment]).toInstance(new MyRuntimeEnvironment(database))
+    bind(classOf[Database]).toProvider(classOf[DatabaseProvider])
+    bind(classOf[MyRuntimeEnvironment]).toProvider(classOf[MyRuntimeEnvironmentProvider])
     bind(classOf[TitleRepository]).toProvider(new TitleRepositoryProvider)
   }
 }

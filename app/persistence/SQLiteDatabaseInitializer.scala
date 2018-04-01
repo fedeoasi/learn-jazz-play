@@ -2,10 +2,11 @@ package persistence
 
 import org.flywaydb.core.Flyway
 import org.sqlite.SQLiteDataSource
+
 import scala.slick.driver.SQLiteDriver.simple._
 
 object SQLiteDatabaseInitializer {
-  def database(dbName: String) = {
+  def database(dbName: String): Database = {
     val url = "jdbc:sqlite:%s.db" format dbName
     val ds = new SQLiteDataSource()
     ds.setUrl(url)
