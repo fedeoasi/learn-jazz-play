@@ -8,7 +8,7 @@ import service.User
 
 import scala.concurrent.Future
 
-class MyUserService(aps: AuthPersistenceService) extends UserService[User] {
+class CustomUserService(aps: AuthPersistenceService) extends UserService[User] {
   val logger = Logger(this.getClass)
 
   override def find(providerId: String, userId: String): Future[Option[BasicProfile]] = Future.successful {

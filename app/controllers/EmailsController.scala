@@ -3,13 +3,12 @@ package controllers
 import com.google.inject.Inject
 import model.Title
 import play.twirl.api.Html
-import securesocial.MyRuntimeEnvironment
+import securesocial.CustomRuntimeEnvironment
 import securesocial.core._
-import service.User
 import titles.TitleRepository
 
 class EmailsController @Inject() (titleRepository: TitleRepository,
-                                  override implicit val env: MyRuntimeEnvironment)
+                                  override implicit val env: CustomRuntimeEnvironment)
   extends SecureSocial {
 
   def sendRandom = SecuredAction { implicit r =>

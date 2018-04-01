@@ -1,13 +1,10 @@
 package controllers
 
 import com.google.inject.{Inject, Singleton}
-import play.api.mvc._
-import securesocial.MyRuntimeEnvironment
-import securesocial.core._
-import service.User
+import securesocial.CustomRuntimeEnvironment
 
 @Singleton
-class ApplicationController @Inject() (override implicit val env: MyRuntimeEnvironment)
+class ApplicationController @Inject() (override implicit val env: CustomRuntimeEnvironment)
   extends securesocial.core.SecureSocial {
 
   def index = SecuredAction { implicit request =>

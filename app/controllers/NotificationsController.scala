@@ -8,11 +8,11 @@ import play.api.mvc.WebSocket
 import play.api.mvc.WebSocket.HandlerProps
 import realtime.MyWebSocketActor
 import realtime.NotificationsProtocol.{SocketConnect, SocketMessage}
-import securesocial.MyRuntimeEnvironment
+import securesocial.CustomRuntimeEnvironment
 import securesocial.core.SecureSocial
 
 class NotificationsController @Inject() (@Named("notifications") notificationsActor: ActorRef,
-                                         override implicit val env: MyRuntimeEnvironment)
+                                         override implicit val env: CustomRuntimeEnvironment)
   extends SecureSocial {
 
   def socket() = {

@@ -10,7 +10,7 @@ import persistence.general.GeneralPersistenceService
 import play.api.data.Form
 import play.api.data.Forms._
 import realtime.NotificationsProtocol.SocketMessage
-import securesocial.MyRuntimeEnvironment
+import securesocial.CustomRuntimeEnvironment
 import securesocial.core.SecureSocial
 import serialization.TitleWithRatingSerializer
 import service.RatingService
@@ -20,7 +20,7 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
                                    ratingService: RatingService,
                                    titleRepository: TitleRepository,
                                    @Named("notifications") notificationsActor: ActorRef,
-                                   override implicit val env: MyRuntimeEnvironment)
+                                   override implicit val env: CustomRuntimeEnvironment)
   extends SecureSocial {
 
   case class RatingFormData(rating: String)

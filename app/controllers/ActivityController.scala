@@ -1,13 +1,13 @@
 package controllers
 
 import com.google.inject.Inject
-import securesocial.MyRuntimeEnvironment
+import securesocial.CustomRuntimeEnvironment
 import securesocial.core.SecureSocial
 import serialization.{BaseActivitySerializer, UserStatsSerializer}
 import service.ActivityService
 
 class ActivityController @Inject() (activityService: ActivityService,
-                                    override implicit val env: MyRuntimeEnvironment)
+                                    override implicit val env: CustomRuntimeEnvironment)
   extends SecureSocial {
 
   val activitySerializer = new BaseActivitySerializer

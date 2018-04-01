@@ -1,11 +1,11 @@
 package controllers
 
 import com.google.inject.Inject
-import securesocial.MyRuntimeEnvironment
+import securesocial.CustomRuntimeEnvironment
 import titles.{TitleRepository, TitleSerializer}
 
 class TitlesController @Inject() (titleRepository: TitleRepository,
-                                  override implicit val env: MyRuntimeEnvironment)
+                                  override implicit val env: CustomRuntimeEnvironment)
   extends securesocial.core.SecureSocial {
 
   val serializer = new TitleSerializer
