@@ -12,6 +12,7 @@ import play.api.data.Forms._
 import realtime.NotificationsProtocol.SocketMessage
 import securesocial.CustomRuntimeEnvironment
 import securesocial.core.SecureSocial
+import securesocial.core.SecureSocial.SecuredRequest
 import serialization.TitleWithRatingSerializer
 import service.RatingService
 import titles.TitleRepository
@@ -66,13 +67,13 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
   }
 
   private def get(titleId: Int, ratingType: RatingType)
-                 (implicit r: SecuredRequest[_]) = {
+                 (implicit r: SecuredRequest[_, env.U]) = {
     val rating = generalPersistenceService.ratingFor(r.user.id, titleId, ratingType)
     Ok(rating.map(_.rating.toString).getOrElse("N/A"))
   }
 
   private def post(titleId: Int, ratingType: RatingType)
-                  (implicit r: SecuredRequest[_]) = {
+                  (implicit r: SecuredRequest[_, env.U]) = {
     val boundForm = ratingForm.bindFromRequest()
     val title = titleRepository(titleId)
     val rating = boundForm.get.rating.toDouble
@@ -82,7 +83,7 @@ class RatingsController @Inject() (generalPersistenceService: GeneralPersistence
   }
 
   private def cancel(titleId: Int, ratingType: RatingType)
-                    (implicit r: SecuredRequest[_]) = {
+                    (implicit r: SecuredRequest[_, env.U]) = {
     generalPersistenceService.cancelRating(r.user.id, titleId, ratingType)
     Ok("Rating canceled")
   }

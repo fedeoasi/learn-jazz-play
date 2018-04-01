@@ -2,6 +2,7 @@ package persistence
 
 import com.google.inject.{Inject, Provider}
 import play.api.Configuration
+
 import scala.slick.driver.SQLiteDriver.simple._
 
 class DatabaseProvider @Inject() (configuration: Configuration) extends Provider[Database] {

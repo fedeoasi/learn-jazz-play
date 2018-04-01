@@ -11,10 +11,10 @@ scalaVersion := "2.11.7"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
-lazy val securesocial = "ws.securesocial" %% "securesocial" % "3.0-M4"
+lazy val securesocial = "ws.securesocial" %% "securesocial" % "3.0-M6"
 lazy val webJarsPlay = "org.webjars" %% "webjars-play" % "2.3.0-2"
 lazy val webJarsBootstrap = "org.webjars" % "bootstrap" % "3.1.1-2"
-lazy val scalatestPlus = "org.scalatestplus" %% "play" % "1.2.0" % "test"
+lazy val scalatestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 lazy val webJarsHandlebars = "org.webjars.bower" % "handlebars" % "2.0.0"
 lazy val webJarsJQuery = "org.webjars" % "jquery" % "2.1.4"
 lazy val webJarsDatatables = "org.webjars" % "datatables" % "1.10.9"

@@ -1,6 +1,7 @@
 package controllers
 
 import akka.actor.ActorRef
+import akka.stream.Materializer
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import play.api.Play.current
@@ -12,7 +13,8 @@ import securesocial.CustomRuntimeEnvironment
 import securesocial.core.SecureSocial
 
 class NotificationsController @Inject() (@Named("notifications") notificationsActor: ActorRef,
-                                         override implicit val env: CustomRuntimeEnvironment)
+                                         override implicit val env: CustomRuntimeEnvironment,
+                                         implicit val mat: Materializer)
   extends SecureSocial {
 
   def socket() = {

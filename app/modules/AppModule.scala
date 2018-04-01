@@ -1,10 +1,9 @@
 package modules
 
-import com.google.inject.AbstractModule
+import com.google.inject.{AbstractModule, Singleton}
 import persistence.DatabaseProvider
 import play.libs.akka.AkkaGuiceSupport
 import realtime.NotificationsProtocol
-import securesocial.{CustomRuntimeEnvironment, CustomRuntimeEnvironmentProvider}
 import titles.{TitleRepository, TitleRepositoryProvider}
 
 class AppModule extends AbstractModule with AkkaGuiceSupport {
@@ -12,8 +11,7 @@ class AppModule extends AbstractModule with AkkaGuiceSupport {
 
   override def configure(): Unit = {
     bindActor(classOf[NotificationsProtocol], "notifications")
-    bind(classOf[Database]).toProvider(classOf[DatabaseProvider])
-    bind(classOf[CustomRuntimeEnvironment]).toProvider(classOf[CustomRuntimeEnvironmentProvider])
+    bind(classOf[Database]).toProvider(classOf[DatabaseProvider]).in(classOf[Singleton])
     bind(classOf[TitleRepository]).toProvider(new TitleRepositoryProvider)
   }
 }

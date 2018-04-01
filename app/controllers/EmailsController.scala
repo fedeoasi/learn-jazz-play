@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import model.Title
 import play.twirl.api.Html
 import securesocial.CustomRuntimeEnvironment
+import securesocial.core.SecureSocial.SecuredRequest
 import securesocial.core._
 import titles.TitleRepository
 
@@ -25,7 +26,7 @@ class EmailsController @Inject() (titleRepository: TitleRepository,
     }
   }
 
-  private def populateTemplate(request: SecuredRequest[_], title: Title): String = {
+  private def populateTemplate(request: SecuredRequest[_, _], title: Title): String = {
     //TODO add youtube search link
     s"""You can learn ${title.title} at http://${request.host}/titles/${title.id}"""
   }
